@@ -1,16 +1,73 @@
 :root {
-  --bg: #0d1117;
+  --bg: #0b0e14;
+  --bg-card: #151b26;
   --text: #e6edf3;
+  --text-dim: #8b949e;
   --accent: #d4af37;
-  --border: #30363d;
+  --accent-hover: #e8c860;
+  --border: #232b3a;
 }
-* { box-sizing: border-box; }
-body { margin:0; font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); }
-.container { max-width: 960px; margin: 0 auto; padding: 0 16px; }
-.site-header { border-bottom: 1px solid var(--border); padding: 12px 0; }
-.header-inner { display:flex; align-items:center; justify-content:space-between; }
-.main-nav a { color: var(--text); text-decoration:none; margin-left:16px; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+.container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+
+/* Header */
+.site-header {
+  border-bottom: 1px solid var(--border);
+  padding: 16px 0;
+  position: sticky; top: 0;
+  background: rgba(11,14,20,0.9);
+  backdrop-filter: blur(8px);
+  z-index: 10;
+}
+.header-inner { display: flex; align-items: center; justify-content: space-between; }
+.logo img { height: 34px; display: block; }
+.main-nav a {
+  color: var(--text-dim); text-decoration: none;
+  margin-left: 24px; font-size: 14px; font-weight: 500;
+  transition: color 0.2s;
+}
 .main-nav a:hover { color: var(--accent); }
-main { padding: 32px 0; min-height: 60vh; }
-.tool-page h1 { color: var(--accent); }
-.site-footer { border-top: 1px solid var(--border); padding: 16px 0; text-align:center; color:#8b949e; font-size:14px; }
+
+/* Hero */
+.hero { text-align: center; padding: 56px 0 40px; }
+.hero h1 { font-size: 2.2rem; margin-bottom: 12px; }
+.hero p { color: var(--text-dim); font-size: 1.05rem; }
+
+/* Tool cards grid */
+.tool-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  padding: 20px 0 60px;
+}
+.tool-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  text-decoration: none;
+  color: var(--text);
+  transition: transform 0.2s, border-color 0.2s;
+}
+.tool-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+.tool-card h3 { font-size: 1.05rem; margin-bottom: 6px; color: var(--accent); }
+.tool-card p { font-size: 0.9rem; color: var(--text-dim); }
+
+/* Tool page */
+main { min-height: 60vh; padding: 40px 0; }
+.tool-page h1 { color: var(--accent); margin-bottom: 20px; font-size: 1.8rem; }
+
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 0;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 13px;
+}
