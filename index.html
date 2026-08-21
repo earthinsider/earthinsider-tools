@@ -1,0 +1,10 @@
+---
+layout: default
+title: Home
+---
+<h1>Free Online Tools</h1>
+<div class="tool-list">
+{% for tool in site.tools %}
+  <a href="{{ tool.url | relative_url }}">{{ tool.title }}</a>
+{% endfor %}
+</div>
