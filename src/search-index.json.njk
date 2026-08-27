@@ -1,0 +1,12 @@
+---
+permalink: /search-index.json
+eleventyExcludeFromCollections: true
+---
+[
+{% for t in collections.toolsList %}
+  { "title": {{ t.title | dump | safe }}, "type": "tool", "url": {{ t.url | dump | safe }} }{% if not loop.last or collections.pagesList.length %},{% endif %}
+{% endfor %}
+{% for p in collections.pagesList %}
+  { "title": {{ p.title | dump | safe }}, "type": "page", "url": {{ p.url | dump | safe }} }{% if not loop.last %},{% endif %}
+{% endfor %}
+]

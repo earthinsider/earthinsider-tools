@@ -1,1 +1,33 @@
+---
+layout: layouts/base.njk
+title: EarthInsider Tools — Free Browser-Based Text & Web Tools
+description: A growing collection of fast, free tools that run entirely in your browser. No sign-up, nothing uploaded.
+section: tools
+---
+<section class="hero">
+    <div class="container">
+        <h1>EarthInsider Tools</h1>
+        <p>Free, fast, browser-based tools. Nothing you type ever leaves your device.</p>
+    </div>
+</section>
 
+<section class="tools-section">
+    <div class="container">
+        <h2>All Tools</h2>
+        <div class="tools-grid">
+            {% for item in collections.toolsList | withGridAdSlots %}
+                {% if item.kind == "tool" %}
+                <a class="tool-card" href="{{ item.tool.url }}">
+                    <div class="tool-icon">{{ item.tool | iconFor }}</div>
+                    <h3 class="tool-title">{{ item.tool.title }}</h3>
+                    <p class="tool-description">{{ item.tool.desc }}</p>
+                </a>
+                {% elif item.kind == "ad-mobile" %}
+                <div class="ad-unit mobile">{% if site.mobileAdSlot %}{{ site.mobileAdSlot | safe }}{% else %}<!-- Mobile Ad Slot: grid, after #{{ item.after }} -->{% endif %}</div>
+                {% elif item.kind == "ad-desktop" %}
+                <div class="ad-unit desktop tool-ad-desktop">{% if site.desktopAdSlot %}{{ site.desktopAdSlot | safe }}{% else %}<!-- Desktop Ad Slot: grid, after #{{ item.after }} -->{% endif %}</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</section>

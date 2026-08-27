@@ -1,0 +1,22 @@
+---
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>{{ site.baseUrl }}/</loc>
+  </url>
+{% for t in collections.toolsList %}
+  <url>
+    <loc>{{ site.baseUrl }}{{ t.url }}</loc>
+    <lastmod>{{ t.date }}</lastmod>
+  </url>
+{% endfor %}
+{% for p in collections.pagesList %}
+  <url>
+    <loc>{{ site.baseUrl }}{{ p.url }}</loc>
+    <lastmod>{{ p.date }}</lastmod>
+  </url>
+{% endfor %}
+</urlset>

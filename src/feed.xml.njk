@@ -1,0 +1,21 @@
+---
+permalink: /feed.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+  <title>{{ site.siteName }}</title>
+  <link>{{ site.baseUrl }}/</link>
+  <description>New tools and pages on {{ site.siteName }}</description>
+{% for t in collections.toolsList %}
+  <item>
+    <title>{{ t.title }}</title>
+    <link>{{ site.baseUrl }}{{ t.url }}</link>
+    <guid>{{ site.baseUrl }}{{ t.url }}</guid>
+    <description>{{ t.desc }}</description>
+    <pubDate>{{ t.date }}</pubDate>
+  </item>
+{% endfor %}
+</channel>
+</rss>
