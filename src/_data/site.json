@@ -10,30 +10,10 @@
   "alwaysLoad": "",
 
   "_comment_mobileAdSlot": "Mobile Ad Slot — shown only on mobile, in header/footer and every 1 tool in the grid. Paste the ad snippet as a string.",
-  "mobileAdSlot": "<script>
-  atOptions = {
-    'key' : '2c504ac44f2ec0d258f1605082178cbd',
-    'format' : 'iframe',
-    'height' : 250,
-    'width' : 300,
-    'params' : {}
-  };
-</script>
-<script src="https://hystericallikingdowntown.com/2c504ac44f2ec0d258f1605082178cbd/invoke.js"></script>
-",
+  "mobileAdSlot": "",
 
   "_comment_desktopAdSlot": "Desktop Ad Slot — shown only on desktop, in header/footer and every 2 tools in the grid. Paste the ad snippet as a string.",
-  "desktopAdSlot": "<script>
-  atOptions = {
-    'key' : '28a48ea75f1951a72be27659c7b58da8',
-    'format' : 'iframe',
-    'height' : 90,
-    'width' : 728,
-    'params' : {}
-  };
-</script>
-<script src="https://hystericallikingdowntown.com/28a48ea75f1951a72be27659c7b58da8/invoke.js"></script>
-",
+  "desktopAdSlot": "",
 
   "_comment_advertisementsInnerCodes": "List of ad codes that auto-spread through page content (top / middle / end). Add as many as you want — spacing recalculates automatically. This is the DEFAULT list used when a tool page doesn't set its own in front-matter.",
   "defaultAdvertisementsInnerCodes": [],
