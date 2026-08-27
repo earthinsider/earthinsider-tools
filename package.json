@@ -1,0 +1,14 @@
+{
+  "name": "earthinsider-tools",
+  "version": "1.0.0",
+  "private": true,
+  "description": "EarthInsider Tools — static multi-tool utility site built with Eleventy",
+  "scripts": {
+    "build": "eleventy",
+    "serve": "eleventy --serve",
+    "debug": "DEBUG=Eleventy* eleventy"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.1"
+  }
+}
