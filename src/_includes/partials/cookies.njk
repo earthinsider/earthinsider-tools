@@ -1,1 +1,10 @@
-
+<!-- ==== COOKIES (global component #9) ====
+     One copy, included on every page, before the closing </body>
+     script so it exists in the DOM before script.js runs. -->
+<div id="cookieBanner">
+    <p>{{ site.cookieText }}</p>
+    <div class="cookie-actions">
+        <button id="cookieDecline">{{ site.cookieDeclineLabel }}</button>
+        <button id="cookieAccept">{{ site.cookieAcceptLabel }}</button>
+    </div>
+</div>

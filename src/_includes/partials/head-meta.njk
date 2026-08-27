@@ -1,0 +1,17 @@
+<!-- ==== META TAG (global component #3) ====
+     Reused on every page. Each page's front-matter supplies title/
+     description/canonical; this partial just wires them up once. -->
+<title>{{ title }} | {{ site.siteName }}</title>
+<meta name="description" content="{{ description }}">
+<link rel="canonical" href="{{ site.baseUrl }}{{ page.url }}">
+<link rel="icon" type="image/png" href="/favicon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ title }}">
+<meta property="og:description" content="{{ description }}">
+<meta property="og:url" content="{{ site.baseUrl }}{{ page.url }}">
+<meta property="og:site_name" content="{{ site.siteName }}">
+
+{% if schema %}
+<script type="application/ld+json">{{ schema | dump | safe }}</script>
+{% endif %}

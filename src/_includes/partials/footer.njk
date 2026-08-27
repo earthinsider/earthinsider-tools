@@ -1,0 +1,33 @@
+<!-- ==== FOOTER (global component #2) ====
+     One copy, included on every page via base.njk. Link columns are
+     generated from tools.json — adding a tool there updates the
+     footer automatically, no manual edits needed. -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Tools</h3>
+                <ul class="footer-links">
+                    {% for t in collections.toolsList %}
+                    <li><a href="{{ t.url }}">{{ t.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Pages</h3>
+                <ul class="footer-links">
+                    {% for p in collections.pagesList %}
+                    <li><a href="{{ p.url }}">{{ p.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">© {{ currentYear }} {{ site.siteName }}. All rights reserved.</div>
+    </div>
+</footer>
+
+<!-- Mobile Ad Slot / Desktop Ad Slot (global components #6, #7) — footer position -->
+<div class="container">
+    <div class="ad-unit desktop">{% if site.desktopAdSlot %}{{ site.desktopAdSlot | safe }}{% else %}<!-- Desktop Ad Slot: footer --> {% endif %}</div>
+    <div class="ad-unit mobile">{% if site.mobileAdSlot %}{{ site.mobileAdSlot | safe }}{% else %}<!-- Mobile Ad Slot: footer --> {% endif %}</div>
+</div>

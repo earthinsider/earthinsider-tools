@@ -1,0 +1,15 @@
+<!-- ==== AD CODE (global component #4) ====
+     Loads every time ANY page opens. Sitewide, not tied to a visual
+     position. Comes from src/_data/site.json -> adCode. -->
+{% if site.adCode %}{{ site.adCode | safe }}{% else %}
+<!-- Ad Code: empty. Paste the ad network's global/site script into site.json -> "adCode" -->
+{% endif %}
+
+<!-- ==== ALWAYS LOAD (global component #8) ====
+     Also loads every time ANY page opens, sitewide — but this is NOT
+     an ad. General slot for anything that must run on every page
+     (e.g. an anti-adblock / adblock-detection script). Kept separate
+     from Ad Code on purpose. Comes from site.json -> alwaysLoad. -->
+{% if site.alwaysLoad %}{{ site.alwaysLoad | safe }}{% else %}
+<!-- Always Load: empty. Paste any non-ad, must-run-everywhere script into site.json -> "alwaysLoad" -->
+{% endif %}

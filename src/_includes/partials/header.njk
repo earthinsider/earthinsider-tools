@@ -1,0 +1,29 @@
+<!-- ==== HEADER (global component #1) ====
+     One copy, included on every page via base.njk. -->
+<header>
+    <div class="container header-content">
+        <a href="/" class="logo"><img class="logo-img" src="{{ site.logoUrl }}" alt="{{ site.siteName }}" loading="lazy"></a>
+
+        <nav class="cats">
+            <a href="/tools/" class="{{ 'active' if section == 'tools' }}">Tools</a>
+            <a href="/pages/" class="{{ 'active' if section == 'pages' }}">Pages</a>
+        </nav>
+
+        <div class="search-wrap" id="searchWrap">
+            <input class="search-check" id="searchCheck" type="checkbox">
+            <label class="search-toggle-btn" for="searchCheck" id="searchToggleBtn" aria-label="Toggle search">🔍</label>
+            <div class="search-dropdown">
+                <input id="searchInput" type="text" placeholder="Search tools & pages…" autocomplete="off">
+                <div id="searchResults" class="search-results"></div>
+            </div>
+        </div>
+
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode"><span id="themeIcon">🌙</span></button>
+    </div>
+</header>
+
+<!-- Mobile Ad Slot / Desktop Ad Slot (global components #6, #7) — header position -->
+<div class="container">
+    <div class="ad-unit desktop">{% if site.desktopAdSlot %}{{ site.desktopAdSlot | safe }}{% else %}<!-- Desktop Ad Slot: header --> {% endif %}</div>
+    <div class="ad-unit mobile">{% if site.mobileAdSlot %}{{ site.mobileAdSlot | safe }}{% else %}<!-- Mobile Ad Slot: header --> {% endif %}</div>
+</div>
