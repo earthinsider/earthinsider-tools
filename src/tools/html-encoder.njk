@@ -1,0 +1,80 @@
+---
+layout: layouts/base.njk
+permalink: /tools/html-encoder/
+title: HTML Encoder - Convert Special Characters to HTML Entities
+description: Encode HTML special characters, URLs, and entities instantly. Free HTML encoder with bulk processing and one-click copy.
+section: tools
+schema:
+  "@context": "https://schema.org"
+  "@type": "SoftwareApplication"
+  name: "HTML Encoder"
+  applicationCategory: "UtilitiesApplication"
+  operatingSystem: "Any (runs in browser)"
+seoContent: |
+  <p>HTML encoding converts special characters into HTML entities so they display safely instead of being read as markup. It's the difference between a comment box that shows a user's text and one that lets that text execute as code.</p>
+  <p>Consider a comment containing <em>&lt;script&gt;alert('x')&lt;/script&gt;</em>. Left unencoded, a browser reads that as an instruction. Encoded, it displays as harmless text — this single transformation closes off most Cross-Site Scripting attempts.</p>
+  <h3>Where it matters beyond security</h3>
+  <p>Mathematical comparisons like "5 &lt; 10" can silently break page layout if the angle bracket isn't encoded. Quotes inside HTML attributes can terminate a string early. Encoding keeps both the visual output and the underlying markup intact at the same time.</p>
+  <p>International text adds another layer — accented letters, CJK characters, and symbols outside the basic ASCII range all need consistent entity handling to render the same way across browsers and devices.</p>
+  <h3>How this tool handles it</h3>
+  <p>Everything runs client-side: the five reserved characters are escaped first, then, if enabled, remaining non-ASCII characters convert to named or numeric entities. Nothing typed here is ever uploaded anywhere.</p>
+  <p>For most people this tool gets used for a few seconds at a time — paste, encode, copy, done. That's the whole job: get out of the way, and be correct every time.</p>
+advertisementsInnerCodes: []
+---
+<section class="hero"><div class="container"><h1>{{ title }}</h1></div></section>
+
+<div class="container stack">
+
+    {# DOM #2 in source (below) — shown FIRST visually via CSS order:1 (see .tool-widget in style.css) #}
+    <section class="tool-widget">
+        <div class="app-container">
+            <section class="input-section">
+                <h2 class="section-title">Enter Your Text</h2>
+                <textarea class="input-text" id="inputText" placeholder="Type or paste your HTML text here...">&lt;div class="example"&gt;
+  This has &lt;tags&gt; and "quotes".
+&lt;/div&gt;</textarea>
+                <div class="button-group">
+                    <button class="encode-btn" id="encodeBtn">Encode HTML</button>
+                    <button class="clear-btn" id="clearBtn">Clear Text</button>
+                </div>
+            </section>
+            <section class="preview-section">
+                <h2 class="section-title">Encoded HTML</h2>
+                <div id="previewContainer"></div>
+            </section>
+        </div>
+    </section>
+
+    {# DOM #1 in source (above the tool in the file) — crawled first.
+       advertisementsInnerCodes falls back to site.defaultAdvertisementsInnerCodes
+       if this page doesn't set its own. #}
+    <section class="seo-content">
+        <div class="info-section">
+            <div class="container">
+                <h2>Why Every Web Developer Needs an HTML Encoder</h2>
+                <div class="info-content">
+                    {{ seoContent | safe | spreadInnerAds(advertisementsInnerCodes.length and advertisementsInnerCodes or site.defaultAdvertisementsInnerCodes) }}
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script>
+function encodeHTML(text){
+  return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+const inputText = document.getElementById('inputText');
+const previewContainer = document.getElementById('previewContainer');
+function updatePreview(text){
+  previewContainer.innerHTML = text.trim()
+    ? `<div class="preview-item"><div class="preview-text">${text.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</div><button class="copy-btn" id="copyBtn">Copy</button></div>`
+    : `<div style="text-align:center;padding:20px;color:var(--text-light)">Encoded HTML will appear here</div>`;
+  const copyBtn = document.getElementById('copyBtn');
+  if(copyBtn) copyBtn.addEventListener('click', () => navigator.clipboard.writeText(text));
+}
+document.getElementById('encodeBtn').addEventListener('click', () => updatePreview(encodeHTML(inputText.value)));
+document.getElementById('clearBtn').addEventListener('click', () => { inputText.value=''; updatePreview(''); });
+updatePreview(encodeHTML(inputText.value));
+</script>
