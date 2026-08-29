@@ -1,0 +1,78 @@
+---
+layout: layouts/base.njk
+permalink: /tools/{{ slug }}/
+title: {{ ai_title }}
+description: {{ ai_description }}
+section: tools
+schema:
+  "@context": "https://schema.org"
+  "@type": "SoftwareApplication"
+  name: "{{ ai_title }}"
+  applicationCategory: "UtilitiesApplication"
+  operatingSystem: "Any (runs in browser)"
+advertisementsInnerCodes: []
+---
+{#
+  SHELL: image-io
+  JS CONTRACT the AI must fill in:
+    function processImage(canvas, ctx, img) { ... draw/transform onto canvas ... }
+  Runs entirely client-side via <canvas>. No upload.
+#}
+<section class="hero"><div class="container"><h1>{{ ai_title }}</h1></div></section>
+
+<div class="container stack">
+    <section class="tool-widget">
+        <div class="tool-card">
+            <input type="file" id="fileInput" accept="image/*">
+            <canvas id="workCanvas" style="max-width:100%;display:none;margin-top:14px;border-radius:8px;"></canvas>
+            <div class="button-group">
+                <button class="encode-btn" id="downloadBtn" style="display:none;">Download Result</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="seo-content">
+        <div class="info-section">
+            <div class="container">
+                <h2>{{ ai_seo_heading }}</h2>
+                <div class="info-content">
+                    {{ ai_seo_content_html | safe | spreadInnerAds(advertisementsInnerCodes.length and advertisementsInnerCodes or site.defaultAdvertisementsInnerCodes) }}
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script id="tool-logic">
+/* ==== AI-GENERATED LOGIC — only this function's body is AI content ==== */
+function processImage(canvas, ctx, img) {
+{{ ai_js_code }}
+}
+/* ==== END AI-GENERATED LOGIC ==== */
+
+const fileInput = document.getElementById('fileInput');
+const canvas = document.getElementById('workCanvas');
+const ctx = canvas.getContext('2d');
+const downloadBtn = document.getElementById('downloadBtn');
+
+fileInput.addEventListener('change', () => {
+  const file = fileInput.files[0];
+  if (!file) return;
+  const img = new Image();
+  img.onload = () => {
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0);
+    try { processImage(canvas, ctx, img); } catch(e){ /* leave as-is on error */ }
+    canvas.style.display = 'block';
+    downloadBtn.style.display = 'inline-block';
+  };
+  img.src = URL.createObjectURL(file);
+});
+downloadBtn.addEventListener('click', () => {
+  const link = document.createElement('a');
+  link.download = 'result.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+});
+</script>

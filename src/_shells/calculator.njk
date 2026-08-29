@@ -1,0 +1,73 @@
+---
+layout: layouts/base.njk
+permalink: /tools/{{ slug }}/
+title: {{ ai_title }}
+description: {{ ai_description }}
+section: tools
+schema:
+  "@context": "https://schema.org"
+  "@type": "SoftwareApplication"
+  name: "{{ ai_title }}"
+  applicationCategory: "UtilitiesApplication"
+  operatingSystem: "Any (runs in browser)"
+advertisementsInnerCodes: []
+---
+{#
+  SHELL: calculator
+  AI must fill:
+    - ai_fields_json: JSON array like
+      [{"id":"principal","label":"Loan Amount","type":"number"},
+       {"id":"rate","label":"Interest Rate (%)","type":"number"}]
+    - ai_js_code: function calculate(inputs) { ... ; return resultString; }
+      (inputs is an object keyed by each field's "id")
+#}
+<section class="hero"><div class="container"><h1>{{ ai_title }}</h1></div></section>
+
+<div class="container stack">
+    <section class="tool-widget">
+        <div class="tool-card">
+            <div id="fieldsContainer"></div>
+            <div class="button-group">
+                <button class="encode-btn" id="calcBtn">Calculate</button>
+            </div>
+            <div id="previewContainer"></div>
+        </div>
+    </section>
+
+    <section class="seo-content">
+        <div class="info-section">
+            <div class="container">
+                <h2>{{ ai_seo_heading }}</h2>
+                <div class="info-content">
+                    {{ ai_seo_content_html | safe | spreadInnerAds(advertisementsInnerCodes.length and advertisementsInnerCodes or site.defaultAdvertisementsInnerCodes) }}
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script id="tool-logic">
+const fields = {{ ai_fields_json | safe }};
+
+/* ==== AI-GENERATED LOGIC — only this function's body is AI content ==== */
+function calculate(inputs) {
+{{ ai_js_code }}
+}
+/* ==== END AI-GENERATED LOGIC ==== */
+
+const fieldsContainer = document.getElementById('fieldsContainer');
+fieldsContainer.innerHTML = fields.map(f => `
+  <div style="margin-bottom:14px;">
+    <label style="display:block;font-size:.85rem;margin-bottom:6px;color:var(--text-light);">${f.label}</label>
+    <input class="input-text" style="min-height:auto;padding:10px 14px;" id="f_${f.id}" type="${f.type || 'text'}">
+  </div>`).join('');
+
+const previewContainer = document.getElementById('previewContainer');
+document.getElementById('calcBtn').addEventListener('click', () => {
+  const inputs = {};
+  fields.forEach(f => { inputs[f.id] = document.getElementById('f_' + f.id).value; });
+  let out;
+  try { out = calculate(inputs); } catch(e){ out = 'Check your inputs.'; }
+  previewContainer.innerHTML = `<div class="preview-item"><div class="preview-text">${String(out).replace(/&/g,'&amp;').replace(/</g,'&lt;')}</div></div>`;
+});
+</script>
