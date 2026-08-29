@@ -4,6 +4,12 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/assets");
   eleventyConfig.addPassthroughCopy({ "src/favicon.png": "favicon.png" });
 
+  // src/_shells/*.njk are reference templates only — the n8n pipeline
+  // fetches them raw via the GitHub API and does its own token-replacement.
+  // They are NOT meant to be built into real pages (they have no real
+  // "slug" etc. at build time), so tell Eleventy to skip them entirely.
+  eleventyConfig.ignores.add("src/_shells/**");
+
   // ---- EMOJI FALLBACK ----
   // If a tool has no icon, use the first letter of its title instead.
   eleventyConfig.addFilter("iconFor", function (item) {
@@ -60,4 +66,3 @@ module.exports = function (eleventyConfig) {
     templateFormats: ["njk", "md", "11ty.js"],
   };
 };
-
