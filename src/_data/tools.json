@@ -78,5 +78,13 @@
     "icon": "✍️",
     "desc": "Quickly format, clean, and beautify your text. Remove extra spaces, fix line breaks, capitalize sentences, and sanitize raw text instantly.",
     "date": "2026-08-30"
+  },
+  {
+    "title": "Online Text Formatter & Cleaner",
+    "type": "tool",
+    "url": "/tools/text-formatter-2/",
+    "icon": "📝",
+    "desc": "Instantly format, clean, and standardize messy text. Remove double spaces, fix line breaks, correct punctuation spacing, and capitalize sentences.",
+    "date": "2026-08-30"
   }
 ]
