@@ -86,5 +86,13 @@
     "icon": "📝",
     "desc": "Instantly format, clean, and standardize messy text. Remove double spaces, fix line breaks, correct punctuation spacing, and capitalize sentences.",
     "date": "2026-08-30"
+  },
+  {
+    "title": "Free QR Code Generator | EarthInsider Tools",
+    "type": "tool",
+    "url": "/tools/qr-code-generator/",
+    "icon": "🔳",
+    "desc": "Create free custom QR codes instantly. Perfect for URLs, text, contact information, and Wi-Fi networks. Fast, secure, and easy to use.",
+    "date": "2026-08-30"
   }
 ]
