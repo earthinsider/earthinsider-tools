@@ -1,11 +1,82 @@
 [
-  { "title": "HTML Encoder",      "type": "tool", "url": "/tools/html-encoder/",      "icon": "🔡", "desc": "Convert special characters to HTML entities.", "date": "2026-08-20" },
-  { "title": "Word Counter",      "type": "tool", "url": "/tools/word-counter/",      "icon": "📝", "desc": "Count words, characters & reading time.",      "date": "2026-08-20" },
-  { "title": "Case Converter",    "type": "tool", "url": "/tools/case-converter/",    "icon": "🔄", "desc": "UPPER, lower, Title and Sentence case.",       "date": "2026-08-20" },
-  { "title": "JSON Formatter",    "type": "tool", "url": "/tools/json-formatter/",    "icon": null, "desc": "Pretty-print and validate JSON.",              "date": "2026-08-20" },
-  { "title": "Remove Duplicates", "type": "tool", "url": "/tools/remove-duplicates/", "icon": "❌", "desc": "Strip duplicate lines from a list.",           "date": "2026-08-20" },
-  { "title": "Slug Generator",    "type": "tool", "url": "/tools/slug-generator/",    "icon": null, "desc": "Turn a title into a URL-safe slug.",           "date": "2026-08-20" },
-  { "title": "URL Extractor",     "type": "tool", "url": "/tools/url-extractor/",     "icon": "🌐", "desc": "Pull every link out of a block of text.",      "date": "2026-08-20" },
-  { "title": "About EarthInsider Tools", "type": "page", "url": "/pages/about/",   "icon": "ℹ️", "desc": "What this toolkit is.",                 "date": "2026-08-20" },
-  { "title": "Privacy Policy",           "type": "page", "url": "/pages/privacy/", "icon": "🔒", "desc": "How little data this site collects.",  "date": "2026-08-20" }
+  {
+    "title": "HTML Encoder",
+    "type": "tool",
+    "url": "/tools/html-encoder/",
+    "icon": "🔡",
+    "desc": "Convert special characters to HTML entities.",
+    "date": "2026-08-20"
+  },
+  {
+    "title": "Word Counter",
+    "type": "tool",
+    "url": "/tools/word-counter/",
+    "icon": "📝",
+    "desc": "Count words, characters & reading time.",
+    "date": "2026-08-20"
+  },
+  {
+    "title": "Case Converter",
+    "type": "tool",
+    "url": "/tools/case-converter/",
+    "icon": "🔄",
+    "desc": "UPPER, lower, Title and Sentence case.",
+    "date": "2026-08-20"
+  },
+  {
+    "title": "JSON Formatter",
+    "type": "tool",
+    "url": "/tools/json-formatter/",
+    "icon": null,
+    "desc": "Pretty-print and validate JSON.",
+    "date": "2026-08-20"
+  },
+  {
+    "title": "Remove Duplicates",
+    "type": "tool",
+    "url": "/tools/remove-duplicates/",
+    "icon": "❌",
+    "desc": "Strip duplicate lines from a list.",
+    "date": "2026-08-20"
+  },
+  {
+    "title": "Slug Generator",
+    "type": "tool",
+    "url": "/tools/slug-generator/",
+    "icon": null,
+    "desc": "Turn a title into a URL-safe slug.",
+    "date": "2026-08-20"
+  },
+  {
+    "title": "URL Extractor",
+    "type": "tool",
+    "url": "/tools/url-extractor/",
+    "icon": "🌐",
+    "desc": "Pull every link out of a block of text.",
+    "date": "2026-08-20"
+  },
+  {
+    "title": "About EarthInsider Tools",
+    "type": "page",
+    "url": "/pages/about/",
+    "icon": "ℹ️",
+    "desc": "What this toolkit is.",
+    "date": "2026-08-20"
+  },
+  {
+    "title": "Privacy Policy",
+    "type": "page",
+    "url": "/pages/privacy/",
+    "icon": "🔒",
+    "desc": "How little data this site collects.",
+    "date": "2026-08-20"
+  },
+  {
+    "title": "Online Text Formatter | Clean and Beautify Text",
+    "type": "tool",
+    "url": "/tools/text-formatter/",
+    "icon": "✍️",
+    "desc": "Quickly format, clean, and beautify your text. Remove extra spaces, fix line breaks, capitalize sentences, and sanitize raw text instantly.",
+    "date": "2026-08-30"
+  }
 ]
