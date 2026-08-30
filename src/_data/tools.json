@@ -94,5 +94,13 @@
     "icon": "🔳",
     "desc": "Create free custom QR codes instantly. Perfect for URLs, text, contact information, and Wi-Fi networks. Fast, secure, and easy to use.",
     "date": "2026-08-30"
+  },
+  {
+    "title": "Secure Random Password Generator",
+    "type": "tool",
+    "url": "/tools/password-generator/",
+    "icon": "🔑",
+    "desc": "Generate strong, randomized passwords instantly. Get secure alphanumeric keys, long passwords, and memorable passphrases to protect your accounts.",
+    "date": "2026-08-30"
   }
 ]
