@@ -1,0 +1,95 @@
+---
+layout: layouts/base.njk
+permalink: /tools/text-formatter/
+title: Online Text Formatter | Clean and Beautify Text
+description: Quickly format, clean, and beautify your text. Remove extra spaces, fix line breaks, capitalize sentences, and sanitize raw text instantly.
+section: tools
+schema:
+  "@context": "https://schema.org"
+  "@type": "SoftwareApplication"
+  name: "Online Text Formatter | Clean and Beautify Text"
+  applicationCategory: "UtilitiesApplication"
+  operatingSystem: "Any (runs in browser)"
+advertisementsInnerCodes: []
+---
+{#
+  SHELL: text-io
+  JS CONTRACT the AI must fill in (see <script id="tool-logic"> below):
+    function processInput(text) { ... ; return outputString; }
+  Nothing else about this file should be touched by the generator —
+  only the {{ ai_* }} tokens and the processInput body.
+#}
+<section class="hero"><div class="container"><h1>Online Text Formatter | Clean and Beautify Text</h1></div></section>
+
+<div class="container stack">
+    <section class="tool-widget">
+        <div class="app-container">
+            <section class="input-section">
+                <h2 class="section-title">Input</h2>
+                <textarea class="input-text" id="toolInput" placeholder="Type or paste text here..."></textarea>
+                <div class="button-group">
+                    <button class="encode-btn" id="runBtn">Format Text</button>
+                    <button class="clear-btn" id="clearBtn">Clear</button>
+                </div>
+            </section>
+            <section class="preview-section">
+                <h2 class="section-title">Output</h2>
+                <div id="previewContainer"></div>
+            </section>
+        </div>
+    </section>
+
+    <section class="seo-content">
+        <div class="info-section">
+            <div class="container">
+                <h2>Why Use Our Online Text Formatter?</h2>
+                <div class="info-content">
+                    <h3>Streamline Your Editing Workflow</h3><p>Whether you are copying text from a PDF, scraping web data, or drafting a new article, raw text often comes with unwanted formatting, excessive whitespace, and irregular line breaks. Our online Text Formatter is designed to instantly clean up messy text, saving you minutes of tedious manual editing.</p><h3>Standardize Spacing and Line Breaks</h3><p>Irregular spacing can make professional documents look sloppy. This tool automatically trims leading and trailing spaces, consolidates multiple consecutive spaces into a single space, and normalizes line breaks. It ensures your paragraphs look cohesive and structured.</p><h3>Convert Smart Quotes and Clean Typography</h3><p>Different word processors use 'smart' curly quotes which can cause syntax issues in code or inconsistent rendering on websites. Our formatter sanitizes typography by converting curly quotes, dashes, and special characters into standard, web-safe equivalents.</p><h3>Perfect for Writers, Coders, and Creators</h3><p>From developers cleaning up markdown files to writers polishing drafts, this text utility is an essential browser companion. It runs entirely client-side, meaning your text is processed instantly without ever being uploaded to a server, keeping your data secure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script id="tool-logic">
+/* ==== AI-GENERATED LOGIC — only this function's body is AI content ==== */
+function processInput(text) {
+if (!text) return '';
+var formatted = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+formatted = formatted.replace(/[\u2018\u2019]/g, String.fromCharCode(39)).replace(/[\u201C\u201D]/g, String.fromCharCode(34)).replace(/[\u2013\u2014]/g, '-');
+var lines = formatted.split('\n');
+var cleanedLines = [];
+var consecutiveEmpty = 0;
+for (var i = 0; i < lines.length; i++) {
+  var line = lines[i].trim().replace(/[ \t]+/g, ' ');
+  if (line === '') {
+    consecutiveEmpty++;
+    if (consecutiveEmpty <= 1) {
+      cleanedLines.push('');
+    }
+  } else {
+    consecutiveEmpty = 0;
+    line = line.replace(/(^\s*|[.!?]\s+)([a-z])/g, function(m, p1, p2) {
+      return p1 + p2.toUpperCase();
+    });
+    cleanedLines.push(line);
+  }
+}
+return cleanedLines.join('\n').trim();
+}
+/* ==== END AI-GENERATED LOGIC ==== */
+
+const toolInput = document.getElementById('toolInput');
+const previewContainer = document.getElementById('previewContainer');
+function renderOutput(text){
+  let out;
+  try { out = processInput(text); } catch(e){ out = ''; }
+  previewContainer.innerHTML = (out && String(out).trim())
+    ? `<div class="preview-item"><div class="preview-text">${String(out).replace(/&/g,'&amp;').replace(/</g,'&lt;')}</div><button class="copy-btn" id="copyBtn">Copy</button></div>`
+    : `<div style="text-align:center;padding:20px;color:var(--text-light)">Output will appear here</div>`;
+  const copyBtn = document.getElementById('copyBtn');
+  if(copyBtn) copyBtn.addEventListener('click', () => navigator.clipboard.writeText(String(out)));
+}
+document.getElementById('runBtn').addEventListener('click', () => renderOutput(toolInput.value));
+document.getElementById('clearBtn').addEventListener('click', () => { toolInput.value=''; renderOutput(''); });
+</script>
