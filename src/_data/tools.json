@@ -110,5 +110,13 @@
     "icon": "✍️",
     "desc": "Format text instantly. Convert to uppercase, lowercase, title case, sentence case, slugify, and clean up messy spacing entirely in your browser.",
     "date": "2026-08-31"
+  },
+  {
+    "title": "Instant SVG QR Code Generator",
+    "type": "tool",
+    "url": "/tools/qr-code-generator-2/",
+    "icon": "📱",
+    "desc": "Create high-quality, scalable SVG QR codes instantly in your browser. 100% private, offline-safe, with no scan limits or dynamic redirects.",
+    "date": "2026-08-31"
   }
 ]
