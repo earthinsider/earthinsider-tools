@@ -1,0 +1,381 @@
+---
+layout: layouts/base.njk
+permalink: /tools/qr-code-generator-2/
+title: Instant SVG QR Code Generator
+description: Create high-quality, scalable SVG QR codes instantly in your browser. 100% private, offline-safe, with no scan limits or dynamic redirects.
+section: tools
+schema:
+  "@context": "https://schema.org"
+  "@type": "SoftwareApplication"
+  name: "Instant SVG QR Code Generator"
+  applicationCategory: "UtilitiesApplication"
+  operatingSystem: "Any (runs in browser)"
+advertisementsInnerCodes: []
+---
+{#
+  SHELL: text-io
+  JS CONTRACT the AI must fill in (see <script id="tool-logic"> below):
+    function processInput(text) { ... ; return outputString; }
+  Nothing else about this file should be touched by the generator —
+  only the {{ ai_* }} tokens and the processInput body.
+#}
+<section class="hero"><div class="container"><h1>Instant SVG QR Code Generator</h1></div></section>
+
+<div class="container stack">
+    <section class="tool-widget">
+        <div class="app-container">
+            <section class="input-section">
+                <h2 class="section-title">Input</h2>
+                <textarea class="input-text" id="toolInput" placeholder="Type or paste text here..."></textarea>
+                <div class="button-group">
+                    <button class="encode-btn" id="runBtn">Generate QR Code</button>
+                    <button class="clear-btn" id="clearBtn">Clear</button>
+                </div>
+            </section>
+            <section class="preview-section">
+                <h2 class="section-title">Output</h2>
+                <div id="previewContainer"></div>
+            </section>
+        </div>
+    </section>
+
+    <section class="seo-content">
+        <div class="info-section">
+            <div class="container">
+                <h2>The Private, Permanent Alternative for Custom QR Codes</h2>
+                <div class="info-content">
+                    <p>Traditional online QR generators frequently route your scans through their own tracking servers. This allows them to monitor your users, collect personal analytics, and even disable your codes unless you pay a recurring subscription. EarthInsider Tools runs this QR Code Generator entirely client-side. By performing all Reed-Solomon error correction and SVG rendering directly inside your browser, your target URLs, phone numbers, and text segments are never transmitted over the internet.</p><h3>High-Fidelity SVG Vector Output</h3><p>Unlike standard PNG or JPG files that become fuzzy and unscannable when resized, this generator compiles your data into a crisp, pure SVG (Scalable Vector Graphic). Vector graphics remain mathematically perfect at any scale. Whether you need to place a tiny 1-inch code on a business card or stretch it across a massive highway billboard, the edges will remain perfectly sharp, allowing camera sensors to easily decode the module patterns from greater distances.</p><h3>Optimized Medium (M) Error Correction</h3><p>Every QR code generated here utilizes the standardized Medium Error Correction Level. This safety margin embeds redundant data modules directly into the matrix, allowing up to 15% of the surface area to be dirty, scratched, or covered while maintaining 100% readability. It offers the ideal balance between high data capacity (keeping the matrix clean and simple) and real-world physical durability.</p><h3>Zero Expiry and Unlimited Lifetime Scans</h3><p>Because the generated QR codes are entirely static, they encode your raw payload directly. There are no middlemen APIs, no redirect URLs, and absolutely no expiration dates. Once you download the SVG file, it is yours permanently and will continue to work flawlessly for as long as your destination link remains active.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script id="tool-logic">
+/* ==== AI-GENERATED LOGIC — only this function's body is AI content ==== */
+function processInput(text) {
+if (!text || text.trim() === '') {
+    return '<div style="color: #ef4444; font-weight: bold; text-align: center;">Please enter some text or a URL to generate a QR Code.</div>';
+}
+
+const GF256_EXP = new Uint8Array(512);
+const GF256_LOG = new Uint8Array(256);
+for (let i = 0, val = 1; i < 256; i++) {
+    GF256_EXP[i] = val;
+    GF256_EXP[i + 255] = val;
+    GF256_LOG[val] = i;
+    val = (val << 1) ^ (val & 0x80 ? 0x11D : 0);
+}
+
+function gf_mul(x, y) {
+    return (x === 0 || y === 0) ? 0 : GF256_EXP[GF256_LOG[x] + GF256_LOG[y]];
+}
+
+function rs_generator(n) {
+    let g = new Uint8Array([1]);
+    for (let i = 0; i < n; i++) {
+        let next = new Uint8Array(g.length + 1);
+        for (let j = 0; j < g.length; j++) {
+            next[j + 1] ^= g[j];
+            next[j] ^= gf_mul(g[j], GF256_EXP[i]);
+        }
+        g = next;
+    }
+    return g;
+}
+
+function rs_encode(data, num_ec_bytes) {
+    const gen = rs_generator(num_ec_bytes);
+    const res = new Uint8Array(data.length + num_ec_bytes);
+    res.set(data);
+    for (let i = 0; i < data.length; i++) {
+        const coef = res[i];
+        if (coef !== 0) {
+            for (let j = 0; j < num_ec_bytes; j++) {
+                res[i + 1 + j] ^= gf_mul(gen[num_ec_bytes - 1 - j], coef);
+            }
+        }
+    }
+    return res.subarray(data.length);
+}
+
+const EC_TABLES = {
+    M: [
+        null,
+        [26, 10, 1],
+        [44, 16, 1],
+        [70, 26, 1],
+        [100, 36, 2],
+        [134, 48, 2],
+        [172, 64, 4],
+        [196, 72, 4],
+        [242, 88, 4],
+        [292, 110, 5],
+        [346, 130, 5],
+        [404, 150, 5],
+        [466, 176, 8],
+        [532, 198, 9],
+        [581, 216, 9]
+    ]
+};
+
+function toUTF8(str) {
+    const bytes = [];
+    for (let i = 0; i < str.length; i++) {
+        let code = str.charCodeAt(i);
+        if (code < 0x80) {
+            bytes.push(code);
+        } else if (code < 0x800) {
+            bytes.push(0xc0 | (code >> 6), 0x80 | (code & 0x3f));
+        } else if (code < 0xd800 || code >= 0xe000) {
+            bytes.push(0xe0 | (code >> 12), 0x80 | ((code >> 6) & 0x3f), 0x80 | (code & 0x3f));
+        } else {
+            i++;
+            code = 0x10000 + (((code & 0x3ff) << 10) | (str.charCodeAt(i) & 0x3ff));
+            bytes.push(0xf0 | (code >> 18), 0x80 | ((code >> 12) & 0x3f), 0x80 | ((code >> 6) & 0x3f), 0x80 | (code & 0x3f));
+        }
+    }
+    return new Uint8Array(bytes);
+}
+
+const dataBytes = toUTF8(text);
+let version = -1;
+let ecParams = null;
+for (let v = 1; v <= 14; v++) {
+    const params = EC_TABLES.M[v];
+    const maxDataBytes = params[0] - params[1];
+    const headerBits = 4 + (v < 10 ? 8 : 16);
+    const totalBits = dataBytes.length * 8 + headerBits;
+    const totalBytesNeeded = Math.ceil(totalBits / 8);
+    if (totalBytesNeeded <= maxDataBytes) {
+        version = v;
+        ecParams = params;
+        break;
+    }
+}
+
+if (version === -1) {
+    return '<div style="color: #ef4444; font-weight: bold; text-align: center;">Text input is too long! Please shorten your text or URL to generate static codes.</div>';
+}
+
+const totalBytes = ecParams[0];
+const ecBytes = ecParams[1];
+const numBlocks = ecParams[2];
+const dataCapacity = totalBytes - ecBytes;
+
+const bitStream = [];
+function writeBits(val, len) {
+    for (let i = len - 1; i >= 0; i--) {
+        bitStream.push((val >> i) & 1);
+    }
+}
+
+writeBits(4, 4);
+writeBits(dataBytes.length, version < 10 ? 8 : 16);
+for (let i = 0; i < dataBytes.length; i++) {
+    writeBits(dataBytes[i], 8);
+}
+const remaining = dataCapacity * 8 - bitStream.length;
+const terminatorLen = Math.min(4, remaining);
+writeBits(0, terminatorLen);
+while (bitStream.length % 8 !== 0) {
+    bitStream.push(0);
+}
+const paddingPatterns = [0xEC, 0x11];
+let padIdx = 0;
+while (bitStream.length < dataCapacity * 8) {
+    writeBits(paddingPatterns[padIdx], 8);
+    padIdx = 1 - padIdx;
+}
+
+const finalDataBytes = new Uint8Array(dataCapacity);
+for (let i = 0; i < dataCapacity; i++) {
+    let byteVal = 0;
+    for (let b = 0; b < 8; b++) {
+        byteVal = (byteVal << 1) | bitStream[i * 8 + b];
+    }
+    finalDataBytes[i] = byteVal;
+}
+
+const blockSize = Math.floor(dataCapacity / numBlocks);
+const remainder = dataCapacity % numBlocks;
+const eccSize = Math.floor(ecBytes / numBlocks);
+
+const blocks = [];
+const eccBlocks = [];
+let offset = 0;
+for (let i = 0; i < numBlocks; i++) {
+    const size = blockSize + (i >= numBlocks - remainder ? 1 : 0);
+    const blockData = finalDataBytes.subarray(offset, offset + size);
+    offset += size;
+    blocks.push(blockData);
+    eccBlocks.push(rs_encode(blockData, eccSize));
+}
+
+const interleaved = [];
+const maxBlockLen = Math.max(...blocks.map(b => b.length));
+for (let j = 0; j < maxBlockLen; j++) {
+    for (let i = 0; i < numBlocks; i++) {
+        if (j < blocks[i].length) {
+            interleaved.push(blocks[i][j]);
+        }
+    }
+}
+for (let j = 0; j < eccSize; j++) {
+    for (let i = 0; i < numBlocks; i++) {
+        interleaved.push(eccBlocks[i][j]);
+    }
+}
+
+const size = 17 + version * 4;
+const matrix = Array.from({ length: size }, () => new Int8Array(size));
+const isReserved = Array.from({ length: size }, () => new Uint8Array(size));
+
+function placeFinder(r, c) {
+    for (let i = -1; i <= 7; i++) {
+        for (let j = -1; j <= 7; j++) {
+            const currR = r + i;
+            const currC = c + j;
+            if (currR >= 0 && currR < size && currC >= 0 && currC < size) {
+                const isBorder = (i === 0 || i === 6 || j === 0 || j === 6);
+                const isCenter = (i >= 2 && i <= 4 && j >= 2 && j <= 4);
+                const isBlack = (i >= 0 && i <= 6 && j >= 0 && j <= 6) && (isBorder || isCenter);
+                matrix[currR][currC] = isBlack ? 1 : 0;
+                isReserved[currR][currC] = 1;
+            } 
+        }
+    }
+}
+placeFinder(0, 0);
+placeFinder(0, size - 7);
+placeFinder(size - 7, 0);
+
+for (let i = 8; i < size - 8; i++) {
+    const val = (i % 2 === 0) ? 1 : 0;
+    if (!isReserved[6][i]) {
+        matrix[6][i] = val;
+        isReserved[6][i] = 1;
+    }
+    if (!isReserved[i][6]) {
+        matrix[i][6] = val;
+        isReserved[i][6] = 1;
+    }
+}
+
+const ALIGNMENT_POS = [
+    [], [], [6, 18], [6, 22], [6, 26], [6, 30], [6, 34], 
+    [6, 22, 38], [6, 24, 42], [6, 26, 46], [6, 28, 50], 
+    [6, 30, 54], [6, 32, 58], [6, 34, 62], [6, 26, 46, 66]
+];
+
+const alignCoords = ALIGNMENT_POS[version];
+for (let i = 0; i < alignCoords.length; i++) {
+    for (let j = 0; j < alignCoords.length; j++) {
+        const r = alignCoords[i];
+        const c = alignCoords[j];
+        if (isReserved[r][c]) continue;
+        for (let dr = -2; dr <= 2; dr++) {
+            for (let dc = -2; dc <= 2; dc++) {
+                const isBlack = Math.max(Math.abs(dr), Math.abs(dc)) !== 1;
+                matrix[r + dr][c + dc] = isBlack ? 1 : 0;
+                isReserved[r + dr][c + dc] = 1;
+            }
+        }
+    }
+}
+
+matrix[size - 8][8] = 1;
+isReserved[size - 8][8] = 1;
+
+for (let i = 0; i < 9; i++) {
+    isReserved[8][i] = 1;
+    isReserved[i][8] = 1;
+    isReserved[size - 1 - i][8] = 1;
+    isReserved[8][size - 1 - i] = 1;
+}
+
+let bitIndex = 0;
+let dir = -1;
+let r = size - 1;
+for (let c = size - 1; c > 0; c -= 2) {
+    if (c === 6) c--;
+    while (true) {
+        for (let colOffset = 0; colOffset < 2; colOffset++) {
+            const currC = c - colOffset;
+            if (!isReserved[r][currC]) {
+                let bit = 0;
+                if (bitIndex < interleaved.length * 8) {
+                    const bytePos = Math.floor(bitIndex / 8);
+                    const bitPos = 7 - (bitIndex % 8);
+                    bit = (interleaved[bytePos] >> bitPos) & 1;
+                    bitIndex++;
+                }
+                matrix[r][currC] = bit;
+            }
+        }
+        r += dir;
+        if (r < 0 || r >= size) {
+            r -= dir;
+            dir = -dir;
+            break;
+        }
+    }
+}
+
+const formatBits = [1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0];
+
+for (let rIdx = 0; rIdx < size; rIdx++) {
+    for (let cIdx = 0; cIdx < size; cIdx++) {
+        if (!isReserved[rIdx][cIdx]) {
+            if ((rIdx + cIdx) % 2 === 0) {
+                matrix[rIdx][cIdx] ^= 1;
+            }
+        }
+    }
+}
+
+for (let i = 0; i < 6; i++) matrix[8][i] = formatBits[i];
+matrix[8][7] = formatBits[6];
+matrix[8][8] = formatBits[7];
+matrix[7][8] = formatBits[8];
+for (let i = 0; i < 6; i++) matrix[5 - i][8] = formatBits[9 + i];
+
+for (let i = 0; i < 8; i++) matrix[size - 1 - i][8] = formatBits[i];
+for (let i = 0; i < 7; i++) matrix[8][size - 7 + i] = formatBits[8 + i];
+
+const cellSize = 8;
+const padding = 16;
+const svgSize = size * cellSize + padding * 2;
+let svgPaths = '';
+
+for (let rIdx = 0; rIdx < size; rIdx++) {
+    for (let cIdx = 0; cIdx < size; cIdx++) {
+        if (matrix[rIdx][cIdx] === 1) {
+            const x = padding + cIdx * cellSize;
+            const y = padding + rIdx * cellSize;
+            svgPaths += `M${x},${y}h${cellSize}v${cellSize}h-${cellSize}z `;
+        }
+    }
+}
+
+const svgMarkup = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svgSize} ${svgSize}" style="max-width: 280px; width: 100%; height: auto; display: block; margin: 0 auto; background: #ffffff; border-radius: 8px;">\n    <path d="${svgPaths.trim()}" fill="#0f172a" />\n</svg>`;
+const downloadDataUrl = `data:image/svg+xml;utf8,${encodeURIComponent(svgMarkup)}`;
+
+return `<div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem; width: 100%;">\n    ${svgMarkup}\n    <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem; text-align: center;">\n        <p style="font-size: 0.875rem; color: #475569; margin: 0;">Successfully generated <strong>${size}x${size}</strong> matrix (Version ${version})</p>\n        <a href="${downloadDataUrl}" download="qr-code.svg" style="display: inline-flex; align-items: center; justify-content: center; padding: 0.625rem 1.25rem; font-size: 0.875rem; font-weight: 600; color: #ffffff; background-color: #2563eb; border-radius: 0.375rem; text-decoration: none; box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1); cursor: pointer; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563eb'">\n            Download Clean SVG File\n        </a>\n    </div>\n</div>`;
+}
+/* ==== END AI-GENERATED LOGIC ==== */
+
+const toolInput = document.getElementById('toolInput');
+const previewContainer = document.getElementById('previewContainer');
+function renderOutput(text){
+  let out;
+  try { out = processInput(text); } catch(e){ out = ''; }
+  previewContainer.innerHTML = (out && String(out).trim())
+    ? `<div class="preview-item"><div class="preview-text">${String(out).replace(/&/g,'&amp;').replace(/</g,'&lt;')}</div><button class="copy-btn" id="copyBtn">Copy</button></div>`
+    : `<div style="text-align:center;padding:20px;color:var(--text-light)">Output will appear here</div>`;
+  const copyBtn = document.getElementById('copyBtn');
+  if(copyBtn) copyBtn.addEventListener('click', () => navigator.clipboard.writeText(String(out)));
+}
+document.getElementById('runBtn').addEventListener('click', () => renderOutput(toolInput.value));
+document.getElementById('clearBtn').addEventListener('click', () => { toolInput.value=''; renderOutput(''); });
+</script>
