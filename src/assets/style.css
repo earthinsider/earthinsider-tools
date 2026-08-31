@@ -76,6 +76,7 @@
 
     .hero { padding:80px 0; text-align:center; background:linear-gradient(135deg, rgba(74,108,247,.1) 0%, var(--bg-color) 100%); }
     .hero h1 { font-size:2.8rem; margin-bottom:20px; background:linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .hero .hero-subtitle { margin-top:14px; color:var(--text-light); font-size:1.05rem; max-width:640px; margin-left:auto; margin-right:auto; }
 
     .ad-unit { width:100%; display:flex; align-items:center; justify-content:center; overflow:hidden; background-color:transparent; margin:20px 0; }
     .ad-unit.desktop { height:90px; }
