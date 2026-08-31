@@ -118,5 +118,13 @@
     "icon": "📱",
     "desc": "Create high-quality, scalable SVG QR codes instantly in your browser. 100% private, offline-safe, with no scan limits or dynamic redirects.",
     "date": "2026-08-31"
+  },
+  {
+    "title": "Secure Password Generator | Cryptographically Strong",
+    "type": "tool",
+    "url": "/tools/password-generator-2/",
+    "icon": "🔑",
+    "desc": "Generate highly secure, cryptographically random passwords locally in your browser. Customize length and complexity with zero server interaction.",
+    "date": "2026-08-31"
   }
 ]
