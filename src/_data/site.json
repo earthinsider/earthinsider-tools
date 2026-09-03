@@ -10,7 +10,7 @@
   "alwaysLoad": "",
 
   "_comment_mobileAdSlot": "Mobile Ad Slot — shown only on mobile, in header/footer and every 1 tool in the grid. Paste the ad snippet as a string.",
-  "mobileAdSlot": "<script async=\"async\">\n  atOptions = {\n    'key' : '12fe0de35878755fdba85b0c77635f10',\n    'format' : 'iframe',\n    'height' : 50,\n    'width' : 320,\n    'params' : {}\n  };\n</script>\n<script async=\"async\" src=\"https://hystericallikingdowntown.com/12fe0de35878755fdba85b0c77635f10/invoke.js\"></script>",
+  "mobileAdSlot": "<script  atOptions = {\n    'key' : '12fe0de35878755fdba85b0c77635f10',\n    'format' : 'iframe',\n    'height' : 50,\n    'width' : 320,\n    'params' : {}\n  };\n</script>\n<script async=\"async\" src=\"https://hystericallikingdowntown.com/12fe0de35878755fdba85b0c77635f10/invoke.js\"></script>",
 
   "_comment_desktopAdSlot": "Desktop Ad Slot — shown only on desktop, in header/footer and every 2 tools in the grid. Paste the ad snippet as a string.",
   "desktopAdSlot": "<script async=\"async\">\n  atOptions = {\n    'key' : '28a48ea75f1951a72be27659c7b58da8',\n    'format' : 'iframe',\n    'height' : 90,\n    'width' : 728,\n    'params' : {}\n  };\n</script>\n<script async=\"async\" src=\"https://hystericallikingdowntown.com/28a48ea75f1951a72be27659c7b58da8/invoke.js\"></script>",
