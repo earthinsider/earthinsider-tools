@@ -1,2 +1,10 @@
 [
+  {
+    "title": "QR Code Generator - Private & Fast Vector Creator",
+    "type": "tool",
+    "url": "/tools/qr-code-generator/",
+    "icon": "📱",
+    "desc": "Generate clean, scanable QR codes instantly in your browser. 100% private, client-side, with downloadable SVG vector code and Unicode preview.",
+    "date": "2026-09-04"
+  }
 ]
