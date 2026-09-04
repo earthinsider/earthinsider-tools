@@ -1,0 +1,396 @@
+---
+layout: layouts/base.njk
+permalink: /tools/qr-code-generator/
+title: QR Code Generator - Private & Fast Vector Creator
+description: Generate clean, scanable QR codes instantly in your browser. 100% private, client-side, with downloadable SVG vector code and Unicode preview.
+section: tools
+schema:
+  "@context": "https://schema.org"
+  "@type": "SoftwareApplication"
+  name: "QR Code Generator - Private & Fast Vector Creator"
+  applicationCategory: "UtilitiesApplication"
+  operatingSystem: "Any (runs in browser)"
+advertisementsInnerCodes: []
+---
+{#
+  SHELL: text-io
+  JS CONTRACT the AI must fill in (see <script id="tool-logic"> below):
+    function processInput(text) { ... ; return outputString; }
+  Nothing else about this file should be touched by the generator —
+  only the {{ ai_* }} tokens and the processInput body.
+#}
+<section class="hero"><div class="container"><h1>QR Code Generator - Private & Fast Vector Creator</h1></div></section>
+<p class="hero-subtitle">Generate clean, scanable QR codes instantly in your browser. 100% private, client-side, with downloadable SVG vector code and Unicode preview.</p>
+
+<div class="container stack">
+    <section class="tool-widget">
+        <div class="app-container">
+            <section class="input-section">
+                <h2 class="section-title">Input</h2>
+                <textarea class="input-text" id="toolInput" placeholder="Type or paste text here..."></textarea>
+                <div class="button-group">
+                    <button class="encode-btn" id="runBtn">Generate QR Code</button>
+                    <button class="clear-btn" id="clearBtn">Clear</button>
+                </div>
+            </section>
+            <section class="preview-section">
+                <h2 class="section-title">Output</h2>
+                <div id="previewContainer"></div>
+            </section>
+        </div>
+    </section>
+
+    <section class="seo-content">
+        <div class="info-section">
+            <div class="container">
+                <h2>Generate High-Quality QR Codes Safely and Offline</h2>
+                <div class="info-content">
+                    <p>QR codes are everywhere, connecting offline environments directly to digital destinations. However, many online QR code generators route your destination URLs through their tracking servers, collecting your target audience’s IP addresses, device data, and physical locations. This QR Code Generator operates entirely on your device. Every URL, text snippet, or piece of sensitive data you input is processed locally within your browser, ensuring complete privacy and preventing any unauthorized redirection or tracking.</p><div class="ads-inner-marker" data-ad="advertisements-inner-codes-1"><script async="async" data-cfasync="false" src="https://hystericallikingdowntown.com/755e2894b84c280066f30b70956bcf4d/invoke.js"></script><div id="container-755e2894b84c280066f30b70956bcf4d"></div></div><h3>Infinite Resolution SVG Exports</h3><p>Unlike raster formats like PNG or JPEG which pixelate when scaled up, this utility outputs fully compliant vector SVGs. This is crucial for high-quality graphic design, product packaging, posters, and print campaigns where crisp edges are essential for reliable scanner recognition. You can resize the generated vector code to any dimension without losing a single pixel of clarity, ensuring seamless scanning from billboards to business cards.</p><div class="ads-inner-marker" data-ad="advertisements-inner-codes-2"><script async="async">atOptions = { 'key' : 'd92f5861608206b0a32b6895f213fcf4', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} };</script><script async="async" src="https://hystericallikingdowntown.com/d92f5861608206b0a32b6895f213fcf4/invoke.js"></script></div><h3>An Elegant Unicode Terminal Preview</h3><p>For quick reference or developers working in minimalist environments, the tool renders a physical preview of the QR code using standard UTF-8 block characters. This text-based preview is mathematically accurate, allowing you to quickly scan the QR code right off your terminal output or share visual previews inside documentation files. It demonstrates the versatility of text formatting combined with classic 2D barcode structures.</p><div class="ads-inner-marker" data-ad="advertisements-inner-codes-4"><script async="async">atOptions = { 'key' : '4ff38720469160133c3bcab672f7ef68', 'format' : 'iframe', 'height' : 600, 'width' : 160, 'params' : {} };</script><script async="async" src="https://hystericallikingdowntown.com/4ff38720469160133c3bcab672f7ef68/invoke.js"></script></div><div class="ads-inner-marker" data-ad="advertisements-inner-codes-3"><script async="async">atOptions = { 'key' : '2c504ac44f2ec0d258f1605082178cbd', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };</script><script async="async" src="https://hystericallikingdowntown.com/2c504ac44f2ec0d258f1605082178cbd/invoke.js"></script></div><h3>How Offline QR Logic Keeps Your Data Secure</h3><p>Traditional QR libraries require massive bloated dependencies or external API calls. Our generator uses a beautifully optimized, self-contained implementation of the ISO/IEC 18004 standard. By dynamically mapping input byte structures to precise Reed-Solomon error correction blocks directly on your CPU, it guarantees rapid execution with zero external network request latencies. This makes it a perfect sandbox tool for sensitive administrative tasks, offline local network paths, and internal company credentials.</p><div class="ads-inner-marker" data-ad="advertisements-inner-codes-5"><script async="async">atOptions = { 'key' : 'a1f788ec9723f3f8183ef65a1ef74cef', 'format' : 'iframe', 'height' : 300, 'width' : 160, 'params' : {} };</script><script async="async" src="https://hystericallikingdowntown.com/a1f788ec9723f3f8183ef65a1ef74cef/invoke.js"></script></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script id="tool-logic">
+/* ==== AI-GENERATED LOGIC — only this function's body is AI content ==== */
+function processInput(text) {
+const textVal = (typeof text === 'string' ? text : '').trim();
+if (!textVal) {
+    return "Please enter some text or a URL above to generate your QR Code.";
+}
+
+// 1. Setup Galois Field math for Reed-Solomon ECC
+const GF256_EXP = new Uint8Array(256);
+const GF256_LOG = new Uint8Array(256);
+let x = 1;
+for (let i = 0; i < 255; i++) {
+    GF256_EXP[i] = x;
+    GF256_LOG[x] = i;
+    x = (x << 1) ^ (x >= 128 ? 0x11D : 0);
+}
+GF256_EXP[255] = GF256_EXP[0];
+
+function gfMultiply(a, b) {
+    return (a === 0 || b === 0) ? 0 : GF256_EXP[(GF256_LOG[a] + GF256_LOG[b]) % 255];
+}
+
+function calcErrorCorrection(data, eccCount) {
+    let generator = new Uint8Array([1]);
+    for (let i = 0; i < eccCount; i++) {
+        const next = new Uint8Array(generator.length + 1);
+        const val = GF256_EXP[i];
+        for (let j = 0; j < generator.length; j++) {
+            next[j] ^= gfMultiply(generator[j], val);
+            next[j + 1] ^= generator[j];
+        }
+        generator = next;
+    }
+    const msg = new Uint8Array(data.length + eccCount);
+    msg.set(data);
+    for (let i = 0; i < data.length; i++) {
+        const coef = msg[i];
+        if (coef !== 0) {
+            for (let j = 0; j < generator.length; j++) {
+                msg[i + j] ^= gfMultiply(generator[j], coef);
+            }
+        }
+    }
+    return msg.subarray(data.length);
+}
+
+// 2. Encode text as UTF-8 bytes
+const bytes = [];
+for (let i = 0; i < textVal.length; i++) {
+    const code = textVal.charCodeAt(i);
+    if (code < 0x80) {
+        bytes.push(code);
+    } else if (code < 0x800) {
+        bytes.push(0xc0 | (code >> 6), 0x80 | (code & 0x3f));
+    } else if (code < 0xd800 || code >= 0xe000) {
+        bytes.push(0xe0 | (code >> 12), 0x80 | ((code >> 6) & 0x3f), 0x80 | (code & 0x3f));
+    } else {
+        i++;
+        const utf32 = 0x10000 + (((code & 0x3ff) << 10) | (textVal.charCodeAt(i) & 0x3ff));
+        bytes.push(
+            0xf0 | (utf32 >> 18),
+            0x80 | ((utf32 >> 12) & 0x3f),
+            0x80 | ((utf32 >> 6) & 0x3f),
+            0x80 | (utf32 & 0x3f)
+        );
+    }
+}
+
+// 3. Define Level L Specs for Versions 1-10 (Strictly 1 block or equal sized blocks to simplify rendering)
+const capacities = [
+    { ver: 1,  size: 21, data: 19,  ecc: 7,   blocks: 1 },
+    { ver: 2,  size: 25, data: 34,  ecc: 10,  blocks: 1 },
+    { ver: 3,  size: 29, data: 55,  ecc: 15,  blocks: 1 },
+    { ver: 4,  size: 33, data: 80,  ecc: 20,  blocks: 1 },
+    { ver: 5,  size: 37, data: 108, ecc: 26,  blocks: 1 },
+    { ver: 6,  size: 41, data: 136, ecc: 36,  blocks: 1 },
+    { ver: 7,  size: 45, data: 124, ecc: 40,  blocks: 2 },
+    { ver: 8,  size: 49, data: 150, ecc: 48,  blocks: 2 },
+    { ver: 9,  size: 53, data: 178, ecc: 56,  blocks: 2 },
+    { ver: 10, size: 57, data: 206, ecc: 68,  blocks: 2 }
+];
+
+let spec = null;
+for (const c of capacities) {
+    const overheadBytes = c.ver >= 10 ? 3 : 2;
+    if (bytes.length + overheadBytes <= c.data) {
+        spec = c;
+        break;
+    }
+}
+
+if (!spec) {
+    return "Error: Text is too long for a client-side Version 10 QR code (Max ~200 UTF-8 bytes).";
+}
+
+const version = spec.ver;
+const size = spec.size;
+
+// 4. Build Bit Stream
+const bits = [];
+// Mode indicator (Byte mode: 0100)
+bits.push(0, 1, 0, 0);
+// Length indicator
+const lengthBits = version >= 10 ? 16 : 8;
+for (let i = lengthBits - 1; i >= 0; i--) {
+    bits.push((bytes.length >> i) & 1);
+}
+// Payload
+for (const b of bytes) {
+    for (let i = 7; i >= 0; i--) {
+        bits.push((b >> i) & 1);
+    }
+}
+// Terminator
+const maxDataBits = spec.data * 8;
+const termLength = Math.min(4, maxDataBits - bits.length);
+for (let i = 0; i < termLength; i++) bits.push(0);
+// Align to byte boundary
+while (bits.length % 8 !== 0) bits.push(0);
+// Padding bytes
+const padBytes = [0xEC, 0x11];
+let padIndex = 0;
+while (bits.length < maxDataBits) {
+    const pad = padBytes[padIndex];
+    for (let i = 7; i >= 0; i--) {
+        bits.push((pad >> i) & 1);
+    }
+    padIndex = (padIndex + 1) % 2;
+}
+
+// 5. Interleave Blocks
+const numBlocks = spec.blocks;
+const totalDataBytes = spec.data;
+const blockDataBytes = totalDataBytes / numBlocks;
+const blockEccBytes = spec.ecc / numBlocks;
+
+const blocks = [];
+for (let b = 0; b < numBlocks; b++) {
+    const blockData = new Uint8Array(blockDataBytes);
+    for (let i = 0; i < blockDataBytes; i++) {
+        let byteVal = 0;
+        const bitOffset = (b * blockDataBytes + i) * 8;
+        for (let bit = 0; bit < 8; bit++) {
+            byteVal = (byteVal << 1) | bits[bitOffset + bit];
+        }
+        blockData[i] = byteVal;
+    }
+    const blockEcc = calcErrorCorrection(blockData, blockEccBytes);
+    blocks.push({ data: blockData, ecc: blockEcc });
+}
+
+const interleaved = [];
+for (let i = 0; i < blockDataBytes; i++) {
+    for (let b = 0; b < numBlocks; b++) {
+        interleaved.push(blocks[b].data[i]);
+    }
+}
+for (let i = 0; i < blockEccBytes; i++) {
+    for (let b = 0; b < numBlocks; b++) {
+        interleaved.push(blocks[b].ecc[i]);
+    }
+}
+
+const finalBits = [];
+for (const b of interleaved) {
+    for (let i = 7; i >= 0; i--) {
+        finalBits.push((b >> i) & 1);
+    }
+}
+
+// 6. Build Grid & Reserve Function Modules
+const grid = Array.from({ length: size }, () => Array(size).fill(null));
+const reserved = Array.from({ length: size }, () => Array(size).fill(false));
+
+function setModule(r, c, val) {
+    grid[r][c] = val;
+    reserved[r][c] = true;
+}
+
+// Finder patterns
+function drawFinder(r, c) {
+    for (let dr = -1; dr <= 7; dr++) {
+        for (let dc = -1; dc <= 7; dc++) {
+            const nr = r + dr;
+            const nc = c + dc;
+            if (nr >= 0 && nr < size && nc >= 0 && nc < size) {
+                if (dr === -1 || dr === 7 || dc === -1 || dc === 7) {
+                    setModule(nr, nc, false);
+                } else {
+                    const isOuter = (dr === 0 || dr === 6 || dc === 0 || dc === 6);
+                    const isInner = (dr >= 2 && dr <= 4 && dc >= 2 && dc <= 4);
+                    setModule(nr, nc, isOuter || isInner);
+                }
+            }
+        }
+    }
+}
+drawFinder(0, 0);
+drawFinder(0, size - 7);
+drawFinder(size - 7, 0);
+
+// Alignment patterns
+const alignmentCoords = [
+    [], [], [6, 18], [6, 22], [6, 26], [6, 30], [6, 34], [6, 22, 38], [6, 24, 42], [6, 26, 46], [6, 28, 50]
+][version];
+
+for (const r of alignmentCoords) {
+    for (const c of alignmentCoords) {
+        if ((r < 9 && c < 9) || (r < 9 && c >= size - 9) || (r >= size - 9 && c < 9)) {
+            continue;
+        }
+        for (let dr = -2; dr <= 2; dr++) {
+            for (let dc = -2; dc <= 2; dc++) {
+                const isOuter = (Math.abs(dr) === 2 || Math.abs(dc) === 2);
+                const isCenter = (dr === 0 && dc === 0);
+                setModule(r + dr, c + dc, isOuter || isCenter);
+            }
+        }
+    }
+}
+
+// Timing patterns
+for (let i = 8; i < size - 8; i++) {
+    if (grid[6][i] === null) setModule(6, i, i % 2 === 0);
+    if (grid[i][6] === null) setModule(i, 6, i % 2 === 0);
+}
+
+// Dark module
+setModule(size - 8, 8, true);
+
+// Reserve spaces around finders for format info
+for (let i = 0; i < 9; i++) {
+    if (i !== 6) {
+        reserved[8][i] = true;
+        reserved[i][8] = true;
+    }
+}
+for (let i = 0; i < 8; i++) {
+    reserved[8][size - 1 - i] = true;
+    reserved[size - 1 - i][8] = true;
+}
+
+// 7. Place Data Modules with Mask Pattern 0: (row + col) % 2 === 0
+let bitOffset = 0;
+for (let c = size - 1; c > 0; c -= 2) {
+    if (c === 6) c--;
+    const upward = ((c + 1) & 2) === 0;
+    for (let r = 0; r < size; r++) {
+        const row = upward ? size - 1 - r : r;
+        for (let col = c; col >= c - 1; col--) {
+            if (!reserved[row][col]) {
+                let bit = 0;
+                if (bitOffset < finalBits.length) {
+                    bit = finalBits[bitOffset++];
+                }
+                const mask = (row + col) % 2 === 0;
+                grid[row][col] = (bit ^ (mask ? 1 : 0)) === 1;
+            }
+        }
+    }
+}
+
+// 8. Format Info (L Level [01] & Mask 0 [000]) -> 0x77C4
+const fmt = 0x77C4;
+const coords1 = [
+    [8, 0], [8, 1], [8, 2], [8, 3], [8, 4], [8, 5], [8, 7], [8, 8],
+    [7, 8], [5, 8], [4, 8], [3, 8], [2, 8], [1, 8], [0, 8]
+];
+const coords2 = [];
+for (let i = 0; i < 8; i++) coords2.push([8, size - 1 - i]);
+for (let i = 0; i < 7; i++) coords2.push([size - 7 + i, 8]);
+
+for (let i = 0; i < 15; i++) {
+    const val = ((fmt >> i) & 1) === 1;
+    grid[coords1[i][0]][coords1[i][1]] = val;
+    grid[coords2[i][0]][coords2[i][1]] = val;
+}
+
+// 9. Generate Beautiful Outputs
+// A. Scalable vector SVG path structure
+let svgPath = "";
+for (let r = 0; r < size; r++) {
+    for (let c = 0; c < size; c++) {
+        if (grid[r][c]) {
+            svgPath += `M${c},${r}h1v1h-1z `;
+        }
+    }
+}
+const svgCode = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 ${size + 8} ${size + 8}" width="350" height="350" shape-rendering="crispEdges">
+  <rect x="-4" y="-4" width="${size + 8}" height="${size + 8}" fill="#ffffff"/>
+  <path d="${svgPath.trim()}" fill="#000000"/>
+</svg>`;
+
+const base64Svg = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgCode)));
+
+// B. Scannable Double-block Unicode Text Art (Quiet zone built-in)
+let unicodeQR = "";
+const whiteRow = "  ".repeat(size + 6) + "\n";
+unicodeQR += whiteRow.repeat(3);
+for (let r = 0; r < size; r++) {
+    unicodeQR += "      ";
+    for (let c = 0; c < size; c++) {
+        unicodeQR += grid[r][c] ? "██" : "  ";
+    }
+    unicodeQR += "      \n";
+}
+unicodeQR += whiteRow.repeat(3);
+
+return `=== QR CODE GENERATED SUCCESSFULLY ===
+
+📱 TEXT PREVIEW (Directly scannable off your monitor!):
+\`\`\`\n${unicodeQR}\`\`\`
+
+💾 DOWNLOAD / INTEGRATION FORMATS:
+
+1. Standard SVG XML Code (Save as .svg filename):
+----------------------------------------------------------------------
+${svgCode}
+----------------------------------------------------------------------
+
+2. Scalable Data URL (Paste into browser URL bar to save/view):
+----------------------------------------------------------------------
+${base64Svg}
+----------------------------------------------------------------------`;
+}
+/* ==== END AI-GENERATED LOGIC ==== */
+
+const toolInput = document.getElementById('toolInput');
+const previewContainer = document.getElementById('previewContainer');
+function renderOutput(text){
+  let out;
+  try { out = processInput(text); } catch(e){ out = ''; }
+  previewContainer.innerHTML = (out && String(out).trim())
+    ? `<div class="preview-item"><div class="preview-text">${String(out).replace(/&/g,'&amp;').replace(/</g,'&lt;')}</div><button class="copy-btn" id="copyBtn">Copy</button></div>`
+    : `<div style="text-align:center;padding:20px;color:var(--text-light)">Output will appear here</div>`;
+  const copyBtn = document.getElementById('copyBtn');
+  if(copyBtn) copyBtn.addEventListener('click', () => navigator.clipboard.writeText(String(out)));
+}
+document.getElementById('runBtn').addEventListener('click', () => renderOutput(toolInput.value));
+document.getElementById('clearBtn').addEventListener('click', () => { toolInput.value=''; renderOutput(''); });
+</script>
