@@ -22,25 +22,24 @@ module.exports = function (eleventyConfig) {
   // 1st near the top, last near the end, rest spaced evenly between.
   // Works by splitting on paragraph boundaries (</p>) and inserting a
   // marker div before the paragraph at each computed index.
-  eleventyConfig.addFilter("spreadInnerAds", function (html, adCodes) {
-    if (!adCodes || !adCodes.length || !html) return html;
-    const parts = html.split(/(<\/p>)/);
-    const paras = [];
-    for (let i = 0; i < parts.length; i += 2) {
-      if (parts[i] !== undefined) paras.push(parts[i] + (parts[i + 1] || ""));
-    }
-    const n = adCodes.length;
-    if (paras.length < n) return html;
-    adCodes.forEach((code, i) => {
-      const idx = Math.min(
-        Math.round(((i + 1) * paras.length) / (n + 1)),
-        paras.length - 1
-      );
-      const marker = `<div class="ads-inner-marker" data-ad="advertisements-inner-codes-${i + 1}">${code}</div>`;
-      paras[idx] = marker + paras[idx];
-    });
-    return paras.join("");
-  });
+eleventyConfig.addFilter("spreadInnerAds", function (html, adCodes) {
+  if (!adCodes || !adCodes.length || !html) return html;
+  const parts = html.split(/(<\/p>)/);
+  const paras = [];
+  for (let i = 0; i < parts.length; i += 2) {
+    if (parts[i] !== undefined) paras.push(parts[i] + (parts[i + 1] || ""));
+  }
+  // Use as many ads as fit — never silently skip ALL of them just because
+  // there are more ad codes configured than paragraphs on this page.
+  const n = Math.min(adCodes.length, paras.length);
+  if (n === 0) return html;
+  for (let i = 0; i < n; i++) {
+    const idx = Math.min(Math.round(((i + 1) * paras.length) / (n + 1)), paras.length - 1);
+    const marker = `<div class="ads-inner-marker" data-ad="advertisements-inner-codes-${i + 1}">${adCodes[i]}</div>`;
+    paras[idx] = marker + paras[idx];
+  }
+  return paras.join("");
+});
 
   // ---- CHUNK helper for building the tools grid with ad-slot cadence ----
   // mobile ad slot: after every 1 tool. desktop ad slot: after every 2.
