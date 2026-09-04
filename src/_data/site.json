@@ -3,34 +3,34 @@
   "baseUrl": "https://tools.earthinsider.in",
   "logoUrl": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjjBHPUAix5lMgUeHrCO4OOsRouCnX9lZwfmtTQ2emfYK9VPvUh2R77scR6kHMYwRnz0rTt5ecGLpX3SVfekO5jI41B6C4YnkJ6-cI5hUrPKLxvgItj-q_YTeE2JjluIegFwCaDgIjhjZ25IOsm0PPsbZSBsoC4J8tYLN6ETqK4-HjdIf2x0duXAlwZw93h/s1952/1000145272.png",
 
-  "_comment_adCode": "Global Ad Code — loads sitewide, every page, every open. Paste a full <script>…</script> tag as a string.",
+  "_comment_adCode": "Global Ad Code — loads sitewide, every page, every open.",
   "adCode": "<script async=\"async\" src=\"https://hystericallikingdowntown.com/99/5d/a9/995da984b1995fab7636355fdd1cca18.js\"></script>",
 
-  "_comment_alwaysLoad": "Always Load — sitewide, every page, every open, but NOT an ad (e.g. anti-adblock script). Paste a full <script>…</script> tag as a string.",
+  "_comment_alwaysLoad": "Always Load — sitewide, every page, every open, but NOT an ad.",
   "alwaysLoad": "",
 
-  "_comment_mobileAdSlot": "Mobile Ad Slot — shown only on mobile, in header/footer and every 1 tool in the grid. Paste the ad snippet as a string.",
-  "mobileAdSlot": "<script  atOptions = {\n    'key' : '12fe0de35878755fdba85b0c77635f10',\n    'format' : 'iframe',\n    'height' : 50,\n    'width' : 320,\n    'params' : {}\n  };\n</script>\n<script async=\"async\" src=\"https://hystericallikingdowntown.com/12fe0de35878755fdba85b0c77635f10/invoke.js\"></script>",
+  "_comment_mobileAdSlot": "Mobile Ad Slot — shown only on mobile, in header/footer and every 1 tool in the grid.",
+  "mobileAdSlot": "<script async=\"async\">atOptions = { 'key' : '12fe0de35878755fdba85b0c77635f10', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };</script><script async=\"async\" src=\"https://hystericallikingdowntown.com/12fe0de35878755fdba85b0c77635f10/invoke.js\"></script>",
 
-  "_comment_desktopAdSlot": "Desktop Ad Slot — shown only on desktop, in header/footer and every 2 tools in the grid. Paste the ad snippet as a string.",
-  "desktopAdSlot": "<script async=\"async\">\n  atOptions = {\n    'key' : '28a48ea75f1951a72be27659c7b58da8',\n    'format' : 'iframe',\n    'height' : 90,\n    'width' : 728,\n    'params' : {}\n  };\n</script>\n<script async=\"async\" src=\"https://hystericallikingdowntown.com/28a48ea75f1951a72be27659c7b58da8/invoke.js\"></script>",
+  "_comment_desktopAdSlot": "Desktop Ad Slot — shown only on desktop, in header/footer and every 2 tools in the grid.",
+  "desktopAdSlot": "<script async=\"async\">atOptions = { 'key' : '28a48ea75f1951a72be27659c7b58da8', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };</script><script async=\"async\" src=\"https://hystericallikingdowntown.com/28a48ea75f1951a72be27659c7b58da8/invoke.js\"></script>",
 
-  "_comment_advertisementsInnerCodes": "List of ad codes that auto-spread through page content (top / middle / end). Add as many as you want — spacing recalculates automatically. This is the DEFAULT list used when a tool page doesn't set its own in front-matter.",
+  "_comment_advertisementsInnerCodes": "List of ad codes that auto-spread through page content.",
   "defaultAdvertisementsInnerCodes": [
-  "<script async=\"async\" data-cfasync=\"false\" src=\"https://hystericallikingdowntown.com/755e2894b84c280066f30b70956bcf4d/invoke.js\"></script>\n<div id=\"container-755e2894b84c280066f30b70956bcf4d\"></div>",
+    "<script async=\"async\" data-cfasync=\"false\" src=\"https://hystericallikingdowntown.com/755e2894b84c280066f30b70956bcf4d/invoke.js\"></script><div id=\"container-755e2894b84c280066f30b70956bcf4d\"></div>",
 
-  "<script async=\"async\">\n  atOptions = {\n    'key' : 'd92f5861608206b0a32b6895f213fcf4',\n    'format' : 'iframe',\n    'height' : 60,\n    'width' : 468,\n    'params' : {}\n  };\n</script>\n<script async=\"async\" src=\"https://hystericallikingdowntown.com/d92f5861608206b0a32b6895f213fcf4/invoke.js\"></script>",
+    "<script async=\"async\">atOptions = { 'key' : 'd92f5861608206b0a32b6895f213fcf4', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} };</script><script async=\"async\" src=\"https://hystericallikingdowntown.com/d92f5861608206b0a32b6895f213fcf4/invoke.js\"></script>",
 
-  "<script async=\"async\">\n  atOptions = {\n    'key' : '2c504ac44f2ec0d258f1605082178cbd',\n    'format' : 'iframe',\n    'height' : 250,\n    'width' : 300,\n    'params' : {}\n  };\n</script>\n<script async=\"async\" src=\"https://hystericallikingdowntown.com/2c504ac44f2ec0d258f1605082178cbd/invoke.js\"></script>",
+    "<script async=\"async\">atOptions = { 'key' : '2c504ac44f2ec0d258f1605082178cbd', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };</script><script async=\"async\" src=\"https://hystericallikingdowntown.com/2c504ac44f2ec0d258f1605082178cbd/invoke.js\"></script>",
 
-  "<script async=\"async\">\n  atOptions = {\n    'key' : '4ff38720469160133c3bcab672f7ef68',\n    'format' : 'iframe',\n    'height' : 600,\n    'width' : 160,\n    'params' : {}\n  };\n</script>\n<script async=\"async\" src=\"https://hystericallikingdowntown.com/4ff38720469160133c3bcab672f7ef68/invoke.js\"></script>",
+    "<script async=\"async\">atOptions = { 'key' : '4ff38720469160133c3bcab672f7ef68', 'format' : 'iframe', 'height' : 600, 'width' : 160, 'params' : {} };</script><script async=\"async\" src=\"https://hystericallikingdowntown.com/4ff38720469160133c3bcab672f7ef68/invoke.js\"></script>",
 
-  "<script async=\"async\">\n  atOptions = {\n    'key' : 'a1f788ec9723f3f8183ef65a1ef74cef',\n    'format' : 'iframe',\n    'height' : 300,\n    'width' : 160,\n    'params' : {}\n  };\n</script>\n<script async=\"async\" src=\"https://hystericallikingdowntown.com/a1f788ec9723f3f8183ef65a1ef74cef/invoke.js\"></script>",
+    "<script async=\"async\">atOptions = { 'key' : 'a1f788ec9723f3f8183ef65a1ef74cef', 'format' : 'iframe', 'height' : 300, 'width' : 160, 'params' : {} };</script><script async=\"async\" src=\"https://hystericallikingdowntown.com/a1f788ec9723f3f8183ef65a1ef74cef/invoke.js\"></script>",
 
-  "<script async=\"async\">\n  atOptions = {\n    'key' : '28a48ea75f1951a72be27659c7b58da8',\n    'format' : 'iframe',\n    'height' : 90,\n    'width' : 728,\n    'params' : {}\n  };\n</script>\n<script async=\"async\" src=\"https://hystericallikingdowntown.com/28a48ea75f1951a72be27659c7b58da8/invoke.js\"></script>",
+    "<script async=\"async\">atOptions = { 'key' : '28a48ea75f1951a72be27659c7b58da8', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };</script><script async=\"async\" src=\"https://hystericallikingdowntown.com/28a48ea75f1951a72be27659c7b58da8/invoke.js\"></script>",
 
-  "<script async=\"async\">\n  atOptions = {\n    'key' : '12fe0de35878755fdba85b0c77635f10',\n    'format' : 'iframe',\n    'height' : 50,\n    'width' : 320,\n    'params' : {}\n  };\n</script>\n<script async=\"async\" src=\"https://hystericallikingdowntown.com/12fe0de35878755fdba85b0c77635f10/invoke.js\"></script>"
-],
+    "<script async=\"async\">atOptions = { 'key' : '12fe0de35878755fdba85b0c77635f10', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };</script><script async=\"async\" src=\"https://hystericallikingdowntown.com/12fe0de35878755fdba85b0c77635f10/invoke.js\"></script>"
+  ],
 
   "_comment_cookies": "Cookie-consent banner text and button labels — shown on every page until the user accepts or declines.",
   "cookieText": "We use cookies to keep EarthInsider Tools working smoothly and to understand basic usage. No personal text you enter into any tool is ever stored.",
