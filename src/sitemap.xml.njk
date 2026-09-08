@@ -7,6 +7,20 @@ eleventyExcludeFromCollections: true
   <url>
     <loc>{{ site.baseUrl }}/</loc>
   </url>
+  <url>
+    <loc>{{ site.baseUrl }}/tools/</loc>
+  </url>
+  <url>
+    <loc>{{ site.baseUrl }}/tools/all/</loc>
+  </url>
+  <url>
+    <loc>{{ site.baseUrl }}/pages/</loc>
+  </url>
+{% for cat in categories %}
+  <url>
+    <loc>{{ site.baseUrl }}/tools/category/{{ cat.slug }}/</loc>
+  </url>
+{% endfor %}
 {% for t in collections.toolsList %}
   <url>
     <loc>{{ site.baseUrl }}{{ t.url }}</loc>

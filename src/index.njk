@@ -3,6 +3,11 @@ layout: layouts/base.njk
 title: EarthInsider Tools — Free Browser-Based Text & Web Tools
 description: A growing collection of fast, free tools that run entirely in your browser. No sign-up, nothing uploaded.
 section: tools
+schema:
+  "@context": "https://schema.org"
+  "@type": "WebSite"
+  name: "EarthInsider Tools"
+  url: "https://tools.earthinsider.in"
 ---
 <section class="hero">
     <div class="container">
@@ -11,23 +16,31 @@ section: tools
     </div>
 </section>
 
+<section class="recently-used" id="recentlyUsedSection" style="display:none;">
+    <div class="container">
+        <h2>Recently Used</h2>
+        <div class="tools-grid" id="recentlyUsedGrid"></div>
+    </div>
+</section>
+
 <section class="tools-section">
     <div class="container">
-        <h2>All Tools</h2>
-        <div class="tools-grid">
-            {% for item in collections.toolsList | withGridAdSlots %}
-                {% if item.kind == "tool" %}
-                <a class="tool-card" href="{{ item.tool.url }}">
-                    <div class="tool-icon">{{ item.tool | iconFor }}</div>
-                    <h3 class="tool-title">{{ item.tool.title }}</h3>
-                    <p class="tool-description">{{ item.tool.desc }}</p>
-                </a>
-                {% elif item.kind == "ad-mobile" %}
-                <div class="ad-unit mobile">{% if site.mobileAdSlot %}{{ site.mobileAdSlot | safe }}{% else %}<!-- Mobile Ad Slot: grid, after #{{ item.after }} -->{% endif %}</div>
-                {% elif item.kind == "ad-desktop" %}
-                <div class="ad-unit desktop tool-ad-desktop">{% if site.desktopAdSlot %}{{ site.desktopAdSlot | safe }}{% else %}<!-- Desktop Ad Slot: grid, after #{{ item.after }} -->{% endif %}</div>
-                {% endif %}
+        <h2>Browse by Category</h2>
+        <div class="category-grid">
+            {% for cat in categories %}
+            <a class="category-tile" href="/tools/category/{{ cat.slug }}/">
+                <div class="category-icon">{{ cat.icon }}</div>
+                <h3>{{ cat.name }}</h3>
+                <p>{{ cat.description }}</p>
+                <span class="category-count">{{ cat.slug | toolsByCategory | length }} tools</span>
+            </a>
             {% endfor %}
+            <a class="category-tile category-tile-all" href="/tools/all/">
+                <div class="category-icon">🗂️</div>
+                <h3>All Tools</h3>
+                <p>Every tool on the site, in one list.</p>
+                <span class="category-count">{{ collections.toolsList.length }} tools</span>
+            </a>
         </div>
     </div>
 </section>

@@ -1,0 +1,36 @@
+---
+layout: layouts/base.njk
+permalink: /search/
+title: Search
+description: Search EarthInsider Tools.
+section: tools
+noindex: true
+---
+<section class="hero"><div class="container"><h1>Search</h1></div></section>
+<section class="tools-section">
+    <div class="container">
+        <div id="searchPageResults" class="tools-grid"></div>
+        <p id="searchPageEmpty" style="text-align:center;color:var(--text-light);display:none;">No matches found. Try a different word.</p>
+    </div>
+</section>
+
+<script>
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  const q = (params.get('q') || '').trim().toLowerCase();
+  const resultsEl = document.getElementById('searchPageResults');
+  const emptyEl = document.getElementById('searchPageEmpty');
+  const pageTitle = document.querySelector('h1');
+  if (q && pageTitle) pageTitle.textContent = 'Search results for "' + q + '"';
+
+  fetch('/search-index.json').then(r => r.json()).then(data => {
+    const matches = q ? data.filter(t => t.title.toLowerCase().includes(q)) : [];
+    if (!matches.length) { emptyEl.style.display = 'block'; return; }
+    resultsEl.innerHTML = matches.map(t => `
+      <a class="tool-card" href="${t.url}">
+        <div class="tool-icon"><span class="type-tag ${t.type}">${t.type}</span></div>
+        <h3 class="tool-title">${t.title}</h3>
+      </a>`).join('');
+  });
+})();
+</script>

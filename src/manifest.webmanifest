@@ -1,0 +1,11 @@
+{
+  "name": "EarthInsider Tools",
+  "short_name": "EI Tools",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F9FBFF",
+  "theme_color": "#4A6CF7",
+  "icons": [
+    { "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjjBHPUAix5lMgUeHrCO4OOsRouCnX9lZwfmtTQ2emfYK9VPvUh2R77scR6kHMYwRnz0rTt5ecGLpX3SVfekO5jI41B6C4YnkJ6-cI5hUrPKLxvgItj-q_YTeE2JjluIegFwCaDgIjhjZ25IOsm0PPsbZSBsoC4J8tYLN6ETqK4-HjdIf2x0duXAlwZw93h/s1952/1000145272.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
