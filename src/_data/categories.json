@@ -1,0 +1,6 @@
+[
+  { "slug": "text-tools", "name": "Text Tools", "icon": "📝", "description": "Encoders, converters, counters, and formatters that work on plain text.", "shellType": "text-io" },
+  { "slug": "image-tools", "name": "Image Tools", "icon": "🖼️", "description": "Compressors, resizers, and filters that process images entirely in your browser.", "shellType": "image-io" },
+  { "slug": "generators", "name": "Generators", "icon": "🎲", "description": "Passwords, QR codes, and other things generated fresh with one click.", "shellType": "generator" },
+  { "slug": "calculators", "name": "Calculators", "icon": "🧮", "description": "Quick calculators for units, dates, loans, and more.", "shellType": "calculator" }
+]
