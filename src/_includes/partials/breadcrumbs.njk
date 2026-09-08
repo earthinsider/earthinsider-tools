@@ -1,0 +1,18 @@
+{# ==== BREADCRUMBS ====
+   Include on tool pages: {% include "partials/breadcrumbs.njk" %}
+   Resolves category from tools.json via the current page URL — no
+   front-matter field needed on the tool page itself. #}
+{% set catSlug = page.url | categoryForUrl %}
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+    <div class="container">
+        <a href="/">Home</a>
+        <span>/</span>
+        <a href="/tools/">Tools</a>
+        {% if catSlug %}
+        <span>/</span>
+        <a href="/tools/category/{{ catSlug }}/">{{ catSlug | categoryNameFor }}</a>
+        {% endif %}
+        <span>/</span>
+        <span class="current">{{ title }}</span>
+    </div>
+</nav>

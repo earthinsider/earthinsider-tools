@@ -1,0 +1,18 @@
+{# ==== RELATED TOOLS ====
+   Include on tool pages: {% include "partials/related-tools.njk" %} #}
+{% set related = page.url | relatedTools(4) %}
+{% if related.length %}
+<section class="related-tools">
+    <div class="container">
+        <h2>Related Tools</h2>
+        <div class="related-grid">
+            {% for t in related %}
+            <a class="tool-card small" href="{{ t.url }}">
+                <div class="tool-icon">{{ t | iconFor }}{% if t.date | isNew %}<span class="new-badge">NEW</span>{% endif %}</div>
+                <h3 class="tool-title">{{ t.title }}</h3>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
