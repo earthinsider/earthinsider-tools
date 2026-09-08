@@ -1,1 +1,28 @@
-
+---
+layout: layouts/base.njk
+permalink: /tools/
+title: All Tools — Browse by Category
+description: Browse every EarthInsider Tools utility, organized by category.
+section: tools
+---
+<section class="hero"><div class="container"><h1>Browse by Category</h1></div></section>
+<section class="tools-section">
+    <div class="container">
+        <div class="category-grid">
+            {% for cat in categories %}
+            <a class="category-tile" href="/tools/category/{{ cat.slug }}/">
+                <div class="category-icon">{{ cat.icon }}</div>
+                <h3>{{ cat.name }}</h3>
+                <p>{{ cat.description }}</p>
+                <span class="category-count">{{ cat.slug | toolsByCategory | length }} tools</span>
+            </a>
+            {% endfor %}
+            <a class="category-tile category-tile-all" href="/tools/all/">
+                <div class="category-icon">🗂️</div>
+                <h3>All Tools</h3>
+                <p>Every tool on the site, in one list.</p>
+                <span class="category-count">{{ collections.toolsList.length }} tools</span>
+            </a>
+        </div>
+    </div>
+</section>

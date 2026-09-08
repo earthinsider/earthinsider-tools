@@ -1,1 +1,35 @@
-
+---
+layout: layouts/base.njk
+pagination:
+  data: categories
+  size: 1
+  alias: cat
+permalink: "/tools/category/{{ cat.slug }}/"
+title: "{{ cat.name }}"
+description: "{{ cat.description }}"
+section: tools
+---
+<section class="hero"><div class="container"><h1>{{ cat.icon }} {{ cat.name }}</h1><p class="hero-subtitle">{{ cat.description }}</p></div></section>
+<section class="tools-section">
+    <div class="container">
+        <div class="tools-grid" id="tools-grid">
+            {% set catTools = cat.slug | toolsByCategory %}
+            {% for item in catTools | withGridAdSlots %}
+                {% if item.kind == "tool" %}
+                <a class="tool-card" href="{{ item.tool.url }}">
+                    <div class="tool-icon">{{ item.tool | iconFor }}{% if item.tool.date | isNew %}<span class="new-badge">NEW</span>{% endif %}</div>
+                    <h3 class="tool-title">{{ item.tool.title }}</h3>
+                    <p class="tool-description">{{ item.tool.desc }}</p>
+                </a>
+                {% elif item.kind == "ad-mobile" %}
+                <div class="ad-unit mobile">{% if site.mobileAdSlot %}{{ site.mobileAdSlot | safe }}{% else %}<!-- Mobile Ad Slot: grid -->{% endif %}</div>
+                {% elif item.kind == "ad-desktop" %}
+                <div class="ad-unit desktop tool-ad-desktop">{% if site.desktopAdSlot %}{{ site.desktopAdSlot | safe }}{% else %}<!-- Desktop Ad Slot: grid -->{% endif %}</div>
+                {% endif %}
+            {% endfor %}
+            {% if catTools.length == 0 %}
+            <p style="text-align:center;color:var(--text-light);grid-column:1/-1;">No tools in this category yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>

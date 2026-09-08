@@ -1,1 +1,21 @@
-
+---
+layout: layouts/base.njk
+permalink: /pages/
+title: Pages
+description: Site information pages — about, privacy, and more.
+section: pages
+---
+<section class="hero"><div class="container"><h1>Pages</h1></div></section>
+<section class="tools-section">
+    <div class="container">
+        <div class="tools-grid">
+            {% for p in collections.pagesList %}
+            <a class="tool-card" href="{{ p.url }}">
+                <div class="tool-icon">{{ p | iconFor }}</div>
+                <h3 class="tool-title">{{ p.title }}</h3>
+                <p class="tool-description">{{ p.desc }}</p>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
