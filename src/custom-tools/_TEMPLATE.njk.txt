@@ -1,1 +1,59 @@
+---
+layout: layouts/base.njk
+permalink: /tools/YOUR-SLUG-HERE/
+title: Your Tool Title
+description: A short meta description, under 155 characters.
+section: tools
+schema:
+  "@context": "https://schema.org"
+  "@type": "SoftwareApplication"
+  name: "Your Tool Title"
+  applicationCategory: "UtilitiesApplication"
+  operatingSystem: "Any (runs in browser)"
+advertisementsInnerCodes: []
+---
+{% include "partials/breadcrumbs.njk" %}
+<section class="hero"><div class="container"><h1>Your Tool Title</h1><p class="hero-subtitle">A short one-line tagline about what this tool does.</p></div></section>
 
+<div class="container stack">
+    <section class="tool-widget">
+        <div class="tool-card">
+            <!-- build your tool's UI here, reuse .input-text / .encode-btn / .clear-btn / .preview-item classes to match the site style -->
+        </div>
+    </section>
+
+    <section class="seo-content">
+        <div class="info-section">
+            <div class="container">
+                <h2>Why This Tool Is Useful</h2>
+                <div class="info-content">
+                    {% set seoHtml %}
+                    <p>Write 4-6 short, genuinely useful paragraphs about this tool here.</p>
+                    {% endset %}
+                    {{ seoHtml | safe | spreadInnerAds(advertisementsInnerCodes.length and advertisementsInnerCodes or site.defaultAdvertisementsInnerCodes) }}
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% include "partials/related-tools.njk" %}
+
+<script>
+// your tool's JS goes here
+</script>
+
+<!--
+  HOW TO USE THIS TEMPLATE:
+  1. Copy this file into src/custom-tools/, rename it to your-slug.njk
+     (this folder is just for YOUR manually-written tools — separate from
+     the AI-generated ones in src/tools/, so they're easy to find, but the
+     URL still comes out as /tools/your-slug/ either way, set above).
+  2. Fill in the title/description/permalink/schema at the top.
+  3. Add a matching entry to src/_data/tools.json:
+     { "title": "...", "type": "tool", "url": "/tools/your-slug/",
+       "icon": "🔧" (or null for auto first-letter), "desc": "...",
+       "date": "YYYY-MM-DD", "category": "text-tools" (pick one from
+       src/_data/categories.json) }
+  4. Delete this instructions block before publishing.
+-->
