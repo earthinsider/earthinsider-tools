@@ -5,6 +5,23 @@
     "url": "/tools/qr-code-generator/",
     "icon": "📱",
     "desc": "Generate clean, scanable QR codes instantly in your browser. 100% private, client-side, with downloadable SVG vector code and Unicode preview.",
-    "date": "2026-09-04"
+    "date": "2026-09-04",
+    "category": "generators"
+  },
+  {
+    "title": "About EarthInsider Tools",
+    "type": "page",
+    "url": "/pages/about/",
+    "icon": "ℹ️",
+    "desc": "What this toolkit is.",
+    "date": "2026-08-20"
+  },
+  {
+    "title": "Privacy Policy",
+    "type": "page",
+    "url": "/pages/privacy/",
+    "icon": "🔒",
+    "desc": "How little data this site collects.",
+    "date": "2026-08-20"
   }
 ]
