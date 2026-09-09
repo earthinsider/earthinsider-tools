@@ -1,47 +1,41 @@
 const tools = require("./src/_data/tools.json");
+const categories = require("./src/_data/categories.json");
 
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/assets");
   eleventyConfig.addPassthroughCopy({ "src/favicon.png": "favicon.png" });
+  eleventyConfig.addPassthroughCopy({ "src/manifest.webmanifest": "manifest.webmanifest" });
 
-  // src/_shells/*.njk are reference templates only — the n8n pipeline
-  // fetches them raw via the GitHub API and does its own token-replacement.
-  // They are NOT meant to be built into real pages (they have no real
-  // "slug" etc. at build time), so tell Eleventy to skip them entirely.
+  // src/_shells/*.njk and src/custom-tools/*.txt are reference/template files
+  // only — never built into real pages.
   eleventyConfig.ignores.add("src/_shells/**");
+  eleventyConfig.ignores.add("src/custom-tools/_TEMPLATE.njk.txt");
 
   // ---- EMOJI FALLBACK ----
-  // If a tool has no icon, use the first letter of its title instead.
   eleventyConfig.addFilter("iconFor", function (item) {
     if (item && item.icon) return item.icon;
     return ((item && item.title) || "").trim().charAt(0).toUpperCase();
   });
 
   // ---- ADVERTISEMENTS-INNER-CODES ----
-  // Give N ad codes -> they auto-spread through rendered HTML content:
-  // 1st near the top, last near the end, rest spaced evenly between.
-  // Works by splitting on paragraph boundaries (</p>) and inserting a
-  // marker div before the paragraph at each computed index.
-eleventyConfig.addFilter("spreadInnerAds", function (html, adCodes) {
-  if (!adCodes || !adCodes.length || !html) return html;
-  const parts = html.split(/(<\/p>)/);
-  const paras = [];
-  for (let i = 0; i < parts.length; i += 2) {
-    if (parts[i] !== undefined) paras.push(parts[i] + (parts[i + 1] || ""));
-  }
-  // Use as many ads as fit — never silently skip ALL of them just because
-  // there are more ad codes configured than paragraphs on this page.
-  const n = Math.min(adCodes.length, paras.length);
-  if (n === 0) return html;
-  for (let i = 0; i < n; i++) {
-    const idx = Math.min(Math.round(((i + 1) * paras.length) / (n + 1)), paras.length - 1);
-    const marker = `<div class="ads-inner-marker" data-ad="advertisements-inner-codes-${i + 1}">${adCodes[i]}</div>`;
-    paras[idx] = marker + paras[idx];
-  }
-  return paras.join("");
-});
+  eleventyConfig.addFilter("spreadInnerAds", function (html, adCodes) {
+    if (!adCodes || !adCodes.length || !html) return html;
+    const parts = html.split(/(<\/p>)/);
+    const paras = [];
+    for (let i = 0; i < parts.length; i += 2) {
+      if (parts[i] !== undefined) paras.push(parts[i] + (parts[i + 1] || ""));
+    }
+    const n = Math.min(adCodes.length, paras.length);
+    if (n === 0) return html;
+    for (let i = 0; i < n; i++) {
+      const idx = Math.min(Math.round(((i + 1) * paras.length) / (n + 1)), paras.length - 1);
+      const marker = `<div class="ads-inner-marker" data-ad="advertisements-inner-codes-${i + 1}">${adCodes[i]}</div>`;
+      paras[idx] = marker + paras[idx];
+    }
+    return paras.join("");
+  });
 
-  // ---- CHUNK helper for building the tools grid with ad-slot cadence ----
+  // ---- CHUNK helper for building a tools grid with ad-slot cadence ----
   // mobile ad slot: after every 1 tool. desktop ad slot: after every 2.
   eleventyConfig.addFilter("withGridAdSlots", function (toolList) {
     const out = [];
@@ -52,6 +46,43 @@ eleventyConfig.addFilter("spreadInnerAds", function (html, adCodes) {
       if (n % 2 === 0) out.push({ kind: "ad-desktop", after: `${n - 1}-${n}` });
     });
     return out;
+  });
+
+  // ---- CATEGORIES ----
+  // Hybrid system: a tool's category comes from its own "category" field
+  // (set explicitly by n8n or by hand for custom tools). This filter is a
+  // safety net only, for any older entry that predates the category field.
+  const typeToCategory = { "text-io": "text-tools", "image-io": "image-tools", "generator": "generators", "calculator": "calculators" };
+  eleventyConfig.addFilter("categoryFor", function (tool) {
+    if (!tool) return null;
+    return tool.category || typeToCategory[tool.shellType] || null;
+  });
+  eleventyConfig.addFilter("categoryNameFor", function (slug) {
+    const cat = categories.find((c) => c.slug === slug);
+    return cat ? cat.name : slug;
+  });
+  eleventyConfig.addFilter("categoryForUrl", function (url) {
+    const t = tools.find((x) => x.url === url);
+    return t ? t.category : null;
+  });
+  eleventyConfig.addFilter("toolsByCategory", function (categorySlug) {
+    return tools.filter((t) => t.type === "tool" && t.category === categorySlug);
+  });
+
+  // ---- RELATED TOOLS ---- (same category, excluding the current page)
+  eleventyConfig.addFilter("relatedTools", function (currentUrl, limit) {
+    const current = tools.find((t) => t.url === currentUrl);
+    if (!current || !current.category) return [];
+    return tools
+      .filter((t) => t.type === "tool" && t.category === current.category && t.url !== currentUrl)
+      .slice(0, limit || 4);
+  });
+
+  // ---- "NEW" BADGE ---- (added within the last 7 days)
+  eleventyConfig.addFilter("isNew", function (dateStr) {
+    if (!dateStr) return false;
+    const diff = Date.now() - new Date(dateStr).getTime();
+    return diff >= 0 && diff <= 7 * 24 * 60 * 60 * 1000;
   });
 
   eleventyConfig.addCollection("toolsList", () => tools.filter((t) => t.type === "tool"));
