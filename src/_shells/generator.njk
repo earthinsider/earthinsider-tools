@@ -17,8 +17,8 @@ advertisementsInnerCodes: []
   JS CONTRACT the AI must fill in:
     function generate() { ... ; return outputString; }
 #}
-<section class="hero"><div class="container"><h1>{{ ai_title }}</h1></div></section>
-<p class="hero-subtitle">{{ ai_description }}</p>
+{% include "partials/breadcrumbs.njk" %}
+<section class="hero"><div class="container"><h1>{{ ai_title }}</h1><p class="hero-subtitle">{{ ai_description }}</p></div></section>
 
 <div class="container stack">
     <section class="tool-widget">
@@ -28,6 +28,7 @@ advertisementsInnerCodes: []
             </div>
             <div id="previewContainer"></div>
         </div>
+        <button class="share-btn" id="shareBtn" type="button">🔗 Share this tool</button>
     </section>
 
     <section class="seo-content">
@@ -41,6 +42,8 @@ advertisementsInnerCodes: []
         </div>
     </section>
 </div>
+
+{% include "partials/related-tools.njk" %}
 
 <script id="tool-logic">
 /* ==== AI-GENERATED LOGIC — only this function's body is AI content ==== */
@@ -57,8 +60,16 @@ function renderOutput(){
     ? `<div class="preview-item"><div class="preview-text">${String(out).replace(/&/g,'&amp;').replace(/</g,'&lt;')}</div><button class="copy-btn" id="copyBtn">Copy</button></div>`
     : `<div style="text-align:center;padding:20px;color:var(--text-light)">Click Generate</div>`;
   const copyBtn = document.getElementById('copyBtn');
-  if(copyBtn) copyBtn.addEventListener('click', () => navigator.clipboard.writeText(String(out)));
+  if(copyBtn) copyBtn.addEventListener('click', () => window.EI_copyText(String(out), copyBtn));
 }
 document.getElementById('genBtn').addEventListener('click', renderOutput);
+document.querySelector('.tool-widget').addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); renderOutput(); }
+});
+document.getElementById('shareBtn').addEventListener('click', function(){
+  const url = window.location.href;
+  if (navigator.share) { navigator.share({ title: document.title, url }).catch(()=>{}); }
+  else { window.EI_copyText(url, this); }
+});
 renderOutput();
 </script>

@@ -21,8 +21,8 @@ advertisementsInnerCodes: []
     - ai_js_code: function calculate(inputs) { ... ; return resultString; }
       (inputs is an object keyed by each field's "id")
 #}
-<section class="hero"><div class="container"><h1>{{ ai_title }}</h1></div></section>
-<p class="hero-subtitle">{{ ai_description }}</p>
+{% include "partials/breadcrumbs.njk" %}
+<section class="hero"><div class="container"><h1>{{ ai_title }}</h1><p class="hero-subtitle">{{ ai_description }}</p></div></section>
 
 <div class="container stack">
     <section class="tool-widget">
@@ -33,6 +33,7 @@ advertisementsInnerCodes: []
             </div>
             <div id="previewContainer"></div>
         </div>
+        <button class="share-btn" id="shareBtn" type="button">🔗 Share this tool</button>
     </section>
 
     <section class="seo-content">
@@ -46,6 +47,8 @@ advertisementsInnerCodes: []
         </div>
     </section>
 </div>
+
+{% include "partials/related-tools.njk" %}
 
 <script id="tool-logic">
 const fields = {{ ai_fields_json | safe }};
@@ -64,11 +67,22 @@ fieldsContainer.innerHTML = fields.map(f => `
   </div>`).join('');
 
 const previewContainer = document.getElementById('previewContainer');
-document.getElementById('calcBtn').addEventListener('click', () => {
+function runCalc(){
   const inputs = {};
   fields.forEach(f => { inputs[f.id] = document.getElementById('f_' + f.id).value; });
   let out;
   try { out = calculate(inputs); } catch(e){ out = 'Check your inputs.'; }
-  previewContainer.innerHTML = `<div class="preview-item"><div class="preview-text">${String(out).replace(/&/g,'&amp;').replace(/</g,'&lt;')}</div></div>`;
+  previewContainer.innerHTML = `<div class="preview-item"><div class="preview-text">${String(out).replace(/&/g,'&amp;').replace(/</g,'&lt;')}</div><button class="copy-btn" id="copyBtn">Copy</button></div>`;
+  const copyBtn = document.getElementById('copyBtn');
+  if(copyBtn) copyBtn.addEventListener('click', () => window.EI_copyText(String(out), copyBtn));
+}
+document.getElementById('calcBtn').addEventListener('click', runCalc);
+document.querySelector('.tool-widget').addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); runCalc(); }
+});
+document.getElementById('shareBtn').addEventListener('click', function(){
+  const url = window.location.href;
+  if (navigator.share) { navigator.share({ title: document.title, url }).catch(()=>{}); }
+  else { window.EI_copyText(url, this); }
 });
 </script>
