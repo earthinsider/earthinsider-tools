@@ -1,31 +1,23 @@
-// Minimal, deliberately conservative service worker.
-// Strategy: network-first for everything. This means visitors ALWAYS get
-// the freshest tool list / newest tools when online — the cache is only a
-// fallback for offline use, never a source of stale content.
-const CACHE = 'ei-tools-v1';
-const PRECACHE = ['/', '/assets/style.css', '/assets/site.js'];
+const CACHE = 'ei-tools-v2';
+const PRECACHE = ['/', '/assets/style.css', '/assets/site.js', '/search-index.json'];
 
-self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(PRECACHE)));
+self.addEventListener('install', function(e){
+  e.waitUntil(caches.open(CACHE).then(function(c){ return c.addAll(PRECACHE); }));
   self.skipWaiting();
 });
-
-self.addEventListener('activate', (e) => {
-  e.waitUntil(
-    caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
-  );
+self.addEventListener('activate', function(e){
+  e.waitUntil(caches.keys().then(function(keys){
+    return Promise.all(keys.filter(function(k){ return k !== CACHE; }).map(function(k){ return caches.delete(k); }));
+  }));
   self.clients.claim();
 });
-
-self.addEventListener('fetch', (e) => {
-  if (e.request.method !== 'GET') return;
+self.addEventListener('fetch', function(e){
+  if(e.request.method !== 'GET') return;
   e.respondWith(
-    fetch(e.request)
-      .then((res) => {
-        const copy = res.clone();
-        caches.open(CACHE).then((c) => c.put(e.request, copy));
-        return res;
-      })
-      .catch(() => caches.match(e.request))
+    fetch(e.request).then(function(res){
+      var copy = res.clone();
+      caches.open(CACHE).then(function(c){ c.put(e.request, copy); });
+      return res;
+    }).catch(function(){ return caches.match(e.request); })
   );
 });
