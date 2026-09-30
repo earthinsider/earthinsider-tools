@@ -1,0 +1,60 @@
+---
+layout: layouts/base.njk
+title: Search
+description: Search EarthInsider Tools.
+section: tools
+noindex: true
+---
+<div class="search-head">
+  <h1>Search results for "<span class="q" id="queryText"></span>"</h1>
+  <div class="results-count" id="resultsCount"></div>
+</div>
+<div class="filter-row search-filters">
+  <button class="filter-btn active" data-filter="all" type="button">All</button>
+  <button class="filter-btn" data-filter="tool" type="button">Tools</button>
+  <button class="filter-btn" data-filter="page" type="button">Pages</button>
+</div>
+<div class="results-grid" id="resultsGrid"></div>
+<div class="empty-state" id="emptyState">
+  <h2>No matches found</h2>
+  <p>Try a different word, or browse by category.</p>
+  <a href="/tools/">Browse by Category</a>
+</div>
+<script>
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var q = (params.get('q') || '').trim();
+  document.getElementById('queryText').textContent = q;
+  var grid = document.getElementById('resultsGrid');
+  var empty = document.getElementById('emptyState');
+  var countEl = document.getElementById('resultsCount');
+  fetch('/search-index.json').then(function(r){ return r.json(); }).then(function(data){
+    var matches = q ? data.filter(function(t){ return t.title.toLowerCase().includes(q.toLowerCase()); }) : data;
+    countEl.textContent = matches.length + ' item' + (matches.length !== 1 ? 's' : '') + ' found';
+    grid.innerHTML = matches.map(function(t){
+      return '<a class="result-card" href="'+t.url+'">'
+        +'<div class="result-icon" style="font-size:1.2rem">'+(t.icon||t.title.charAt(0))+'</div>'
+        +'<div class="result-body"><div class="result-top"><span class="type-tag '+t.type+'">'+t.type+'</span></div>'
+        +'<h3>'+t.title+'</h3><p>'+t.desc+'</p></div></a>';
+    }).join('');
+    if(!matches.length){ grid.style.display='none'; empty.classList.add('show'); }
+  });
+  var buttons = document.querySelectorAll('.filter-btn');
+  buttons.forEach(function(b){
+    b.addEventListener('click', function(){
+      buttons.forEach(function(x){ x.classList.remove('active'); });
+      b.classList.add('active');
+      var f = b.getAttribute('data-filter');
+      var cards = document.querySelectorAll('.result-card');
+      var n = 0;
+      cards.forEach(function(c){
+        var show = f === 'all' || c.querySelector('.type-tag').textContent === f;
+        c.style.display = show ? '' : 'none';
+        if(show) n++;
+      });
+      countEl.textContent = n + ' item' + (n !== 1 ? 's' : '') + ' found';
+      empty.classList.toggle('show', n === 0);
+    });
+  });
+})();
+</script>

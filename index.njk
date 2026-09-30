@@ -1,0 +1,36 @@
+---
+layout: layouts/base.njk
+title: EarthInsider Tools — Free Browser-Based Text & Web Tools
+description: A growing collection of fast, free tools that run entirely in your browser. No sign-up, nothing uploaded.
+section: tools
+---
+<div class="recently-used" id="recentlyUsedSection">
+  <h2>Recently Used</h2>
+  <div class="recent-grid" id="recentlyUsedGrid"></div>
+</div>
+
+<section class="hero">
+  <div class="status-badge"><span class="status-dot"></span> WASM Core Active &nbsp;·&nbsp; Sandboxed Client Engine</div>
+  <h1>Compute locally with <span class="accent">EarthInsider Tools</span></h1>
+  <p class="hero-subtitle">Free, fast, browser-based utilities. Nothing you type ever leaves your device.</p>
+</section>
+
+<section class="section">
+  <h2>Browse by Category</h2>
+  <div class="category-grid">
+    {% for cat in categories %}
+    <a class="category-tile" href="/tools/category/{{ cat.slug }}/">
+      <div class="cat-icon">{{ cat.icon }}</div>
+      <h3>{{ cat.name }}</h3>
+      <p>{{ cat.description }}</p>
+      <span class="category-count">{{ cat.slug | toolsByCategory | length }} tools</span>
+    </a>
+    {% endfor %}
+    <a class="category-tile category-tile-all" href="/tools/all/">
+      <div class="cat-icon">🗂️</div>
+      <h3>All Tools</h3>
+      <p>Every tool on the site, in one list.</p>
+      <span class="category-count">{{ collections.toolsList.length }} tools</span>
+    </a>
+  </div>
+</section>

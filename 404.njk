@@ -1,0 +1,38 @@
+---
+layout: layouts/base.njk
+permalink: /404.html
+title: Page Not Found
+description: This page doesn't exist — search for what you were looking for.
+noindex: true
+---
+<section class="hero-404">
+  <div class="status-badge"><span class="status-dot"></span> Sandbox Intact · Zero Data Leaked</div>
+  <div class="big-404">
+    <span>4</span>
+    <div class="wrench"><span class="icon icon-xl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg></span></div>
+    <span>4</span>
+  </div>
+  <h1>Lost in Cyberspace?</h1>
+  <p>This page doesn't exist (yet). Try searching or browse all tools.</p>
+  <form class="search-box" action="/search/" method="GET">
+    <span class="icon" style="width:18px;height:18px;color:var(--outline)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
+    <input type="text" name="q" placeholder="Find a tool...">
+    <button type="submit">Search</button>
+  </form>
+  <div class="action-row">
+    <a class="action-btn primary" href="/tools/all/">🗂️ Explore All Tools</a>
+    <a class="action-btn" href="/">🏠 Homepage</a>
+    <a class="action-btn" href="javascript:history.back()">← Go Back</a>
+  </div>
+</section>
+<section class="section">
+  <h2>Popular Tools</h2>
+  <div class="popular-grid">
+    {% for t in collections.toolsList | first(3) %}
+    <a class="popular-card" href="{{ t.url }}">
+      <h3>{{ t | iconFor }} {{ t.title }}</h3>
+      <p>{{ t.desc }}</p>
+    </a>
+    {% endfor %}
+  </div>
+</section>
