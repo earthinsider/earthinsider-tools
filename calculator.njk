@@ -1,0 +1,40 @@
+---
+layout: layouts/base.njk
+permalink: /tools/{{ slug }}/
+title: {{ ai_title }}
+description: {{ ai_description }}
+section: tools
+schema:
+  "@context": "https://schema.org"
+  "@type": "SoftwareApplication"
+  name: "{{ ai_title }}"
+  applicationCategory: "UtilitiesApplication"
+  operatingSystem: "Any (runs in browser)"
+advertisementsInnerCodes: []
+---
+{% include "partials/breadcrumbs.njk" %}
+<section class="hero"><h1>{{ ai_title }}</h1><p class="hero-subtitle">{{ ai_description }}</p></section>
+<div style="display:flex;flex-direction:column">
+  <section class="tool-widget" style="padding:0 16px 16px">
+    <div class="workstation">
+      <div id="fieldsContainer"></div>
+      <div class="action-col"><button class="btn-primary" id="calcBtn" type="button">Calculate</button></div>
+      <div class="panel" style="margin-top:12px"><div class="panel-head"><span class="panel-title">Result</span><button class="panel-btn" id="copyBtn" type="button">Copy</button></div><div class="output-text" id="outputText">Enter values above</div></div>
+    </div>
+    <button class="share-btn" type="button">🔗 Share this tool</button>
+  </section>
+  <section class="seo-content"><div class="info-section"><h2>{{ ai_seo_heading }}</h2>{% set _ads = advertisementsInnerCodes if advertisementsInnerCodes.length else site.defaultAdvertisementsInnerCodes %}{{ ai_seo_content_html | safe | spreadInnerAds(_ads) }}</div></section>
+</div>
+{% include "partials/related-tools.njk" %}
+<script id="tool-logic">
+var fields = {{ ai_fields_json | safe }};
+function calculate(inputs) {
+{{ ai_js_code }}
+}
+var container=document.getElementById('fieldsContainer'),output=document.getElementById('outputText');
+container.innerHTML=fields.map(function(f){return '<div style="margin-bottom:12px"><label style="display:block;font-size:.82rem;margin-bottom:4px;color:var(--on-surface-variant)">'+f.label+'</label><input class="tool-input" style="min-height:auto;padding:10px 12px" id="f_'+f.id+'" type="'+(f.type||'text')+'"></div>';}).join('');
+function run(){var inp={};fields.forEach(function(f){inp[f.id]=document.getElementById('f_'+f.id).value;});var out;try{out=calculate(inp);}catch(e){out='Check your inputs.';}output.textContent=String(out);}
+document.getElementById('calcBtn').addEventListener('click',run);
+document.getElementById('copyBtn').addEventListener('click',function(){window.EI_copyText&&window.EI_copyText(output.textContent,this);});
+document.querySelector('.share-btn').addEventListener('click',function(){window.EI_copyText&&window.EI_copyText(window.location.href,this);});
+</script>

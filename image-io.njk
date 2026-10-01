@@ -1,0 +1,37 @@
+---
+layout: layouts/base.njk
+permalink: /tools/{{ slug }}/
+title: {{ ai_title }}
+description: {{ ai_description }}
+section: tools
+schema:
+  "@context": "https://schema.org"
+  "@type": "SoftwareApplication"
+  name: "{{ ai_title }}"
+  applicationCategory: "UtilitiesApplication"
+  operatingSystem: "Any (runs in browser)"
+advertisementsInnerCodes: []
+---
+{% include "partials/breadcrumbs.njk" %}
+<section class="hero"><h1>{{ ai_title }}</h1><p class="hero-subtitle">{{ ai_description }}</p></section>
+<div style="display:flex;flex-direction:column">
+  <section class="tool-widget" style="padding:0 16px 16px">
+    <div class="workstation">
+      <input type="file" id="fileInput" accept="image/*">
+      <canvas id="workCanvas" style="max-width:100%;display:none;margin-top:12px;border-radius:8px"></canvas>
+      <div class="action-col" style="margin-top:12px"><button class="btn-primary" id="downloadBtn" style="display:none" type="button">Download Result</button></div>
+    </div>
+    <button class="share-btn" type="button">🔗 Share this tool</button>
+  </section>
+  <section class="seo-content"><div class="info-section"><h2>{{ ai_seo_heading }}</h2>{% set _ads = advertisementsInnerCodes if advertisementsInnerCodes.length else site.defaultAdvertisementsInnerCodes %}{{ ai_seo_content_html | safe | spreadInnerAds(_ads) }}</div></section>
+</div>
+{% include "partials/related-tools.njk" %}
+<script id="tool-logic">
+function processImage(canvas,ctx,img){
+{{ ai_js_code }}
+}
+var fileInput=document.getElementById('fileInput'),canvas=document.getElementById('workCanvas'),ctx=canvas.getContext('2d'),dlBtn=document.getElementById('downloadBtn');
+fileInput.addEventListener('change',function(){var file=fileInput.files[0];if(!file)return;var img=new Image();img.onload=function(){canvas.width=img.width;canvas.height=img.height;ctx.drawImage(img,0,0);try{processImage(canvas,ctx,img);}catch(e){}canvas.style.display='block';dlBtn.style.display='inline-block';};img.src=URL.createObjectURL(file);});
+dlBtn.addEventListener('click',function(){var a=document.createElement('a');a.download='result.png';a.href=canvas.toDataURL('image/png');a.click();});
+document.querySelector('.share-btn').addEventListener('click',function(){window.EI_copyText&&window.EI_copyText(window.location.href,this);});
+</script>
