@@ -1,46 +1,52 @@
 {% from "partials/icons.njk" import globe, search, moon, sun, menu %}
-<!-- ==== HEADER (global component #1) ==== -->
 <header class="site-header">
   <div class="header-row">
     <a href="/" class="logo">
       <div class="logo-mark">
-        {% if site.logoUrl %}<img class="logo-img" src="{{ site.logoUrl }}" alt="{{ site.siteName }}" loading="lazy">
+        {% if site.logoUrl %}<img class="logo-img" src="{{ site.logoUrl }}" alt="{{ site.siteName }}" width="32" height="32" loading="eager" fetchpriority="low">
         {% else %}{{ globe() }}{% endif %}
       </div>
       <span class="logo-text">EarthInsider <span class="logo-tag">Tools</span></span>
     </a>
 
     <nav class="desktop-nav">
-      <a href="/tools/" class="{{ 'active' if section == 'tools' }}">Tools</a>
-      <a href="/pages/" class="{{ 'active' if section == 'pages' }}">Pages</a>
+      <a href="/tools/" {% if section == 'tools' %}class="active"{% endif %}>Tools</a>
+      <a href="/pages/" {% if section == 'pages' %}class="active"{% endif %}>Pages</a>
     </nav>
 
-    <div class="desktop-search">
-      {{ search() }}
-      <input id="desktopSearchInput" type="text" placeholder="Search tools & pages… ( / )">
-      <div id="desktopSearchResults" class="search-results" style="position:absolute;top:calc(100% + 8px);left:0;right:0;background:var(--surface-low);border:1px solid var(--outline-variant);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.4);max-height:320px;overflow:auto;display:none;z-index:200"></div>
+    <div class="desktop-search-wrap">
+      <span class="srch-icon icon-sm">{{ search() | replace('class="icon"','') | safe }}</span>
+      <input id="desktopSearch" type="search" placeholder="Search tools… ( / )" autocomplete="off" aria-label="Search tools">
+      <div id="desktopDrop" class="search-dropdown" role="listbox"></div>
     </div>
 
-    <div class="header-actions">
-      <div class="desktop-badge"><span class="status-dot"></span> 100% Client-Side</div>
-      <button class="icon-btn" id="themeToggle" aria-label="Toggle dark/light mode">{{ moon() }}{{ sun() }}</button>
-      <button class="icon-btn" id="mobileMenuBtn" aria-label="Open menu">{{ menu() }}</button>
+    <div class="header-right">
+      <button class="icon-btn" id="themeToggle" aria-label="Toggle dark/light mode">
+        <span class="icon" id="iconMoon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+        <span class="icon" id="iconSun" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span>
+      </button>
+      <button class="icon-btn" id="mobileMenuBtn" aria-label="Open navigation">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></span>
+      </button>
     </div>
   </div>
 
-  <div class="mobile-menu" id="mobileMenuPanel">
-    <div class="mobile-search">
-      {{ search() }}
-      <input id="searchInput" type="text" placeholder="Search tools & pages…">
-      <div id="searchResults" class="search-results" style="position:absolute;top:100%;left:12px;right:12px;background:var(--surface-low);border:1px solid var(--outline-variant);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.4);max-height:260px;overflow:auto;display:none;z-index:200"></div>
+  <div class="mobile-menu" id="mobileMenuPanel" role="dialog" aria-label="Navigation menu">
+    <div class="mobile-search-row">
+      <span class="icon icon-sm" style="color:var(--ol)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+      <input id="mobileSearch" type="search" placeholder="Search tools & pages…" autocomplete="off" aria-label="Search">
+      <div id="mobileDrop" class="search-dropdown" role="listbox" style="top:calc(100% + 6px);left:0;right:0"></div>
     </div>
-    <a href="/tools/">Tools</a>
-    <a href="/pages/">Pages</a>
+    <nav>
+      <a href="/tools/">Tools</a>
+      <a href="/pages/">Pages</a>
+    </nav>
   </div>
 </header>
 
-<!-- Ad slots: header position -->
-<div style="position:relative">
-  <div class="ad-unit desktop">{% if site.desktopAdSlot %}{{ site.desktopAdSlot | safe }}{% else %}<!-- Desktop Ad Slot: header -->{% endif %}</div>
-  <div class="ad-unit mobile">{% if site.mobileAdSlot %}{{ site.mobileAdSlot | safe }}{% else %}<!-- Mobile Ad Slot: header -->{% endif %}</div>
+{% if site.desktopAdSlot or site.mobileAdSlot %}
+<div>
+  <div class="ad-unit desktop">{{ site.desktopAdSlot | safe }}</div>
+  <div class="ad-unit mobile">{{ site.mobileAdSlot | safe }}</div>
 </div>
+{% endif %}

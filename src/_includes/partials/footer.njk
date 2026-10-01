@@ -1,38 +1,19 @@
-{% from "partials/icons.njk" import home, grid, bolt, shield %}
-<!-- ==== FOOTER (global component #2) ==== -->
 <footer>
   <div class="footer-brand">
     <h3>{{ site.siteName }}</h3>
-    <p>100% Client-Side. No data ever leaves your device.</p>
+    <p>100% client-side. No data ever leaves your device.</p>
   </div>
-  <div class="footer-content">
-    <div class="footer-section">
-      <h4>Tools</h4>
-      {% for t in collections.toolsList %}
-      <a href="{{ t.url }}">{{ t.title }}</a>
-      {% endfor %}
-    </div>
-    <div class="footer-section">
-      <h4>Pages</h4>
-      {% for p in collections.pagesList %}
-      <a href="{{ p.url }}">{{ p.title }}</a>
-      {% endfor %}
-    </div>
+  <div class="footer-cols">
+    <div><h4>Tools</h4>{% for t in collections.toolsList %}<a href="{{ t.url }}">{{ t.title }}</a>{% endfor %}</div>
+    <div><h4>Pages</h4>{% for p in collections.pagesList %}<a href="{{ p.url }}">{{ p.title }}</a>{% endfor %}</div>
   </div>
-
-  <!-- Footer ad slots -->
-  <div class="ad-unit desktop" style="margin:16px 0 8px">{% if site.desktopAdSlot %}{{ site.desktopAdSlot | safe }}{% else %}<!-- Desktop Ad Slot: footer -->{% endif %}</div>
-  <div class="ad-unit mobile" style="margin:16px 0 8px">{% if site.mobileAdSlot %}{{ site.mobileAdSlot | safe }}{% else %}<!-- Mobile Ad Slot: footer -->{% endif %}</div>
-
   <div class="copyright">© {{ currentYear }} {{ site.siteName }}. All rights reserved.</div>
 </footer>
-
-<!-- Bottom nav (mobile only) -->
-<nav class="bottom-nav">
-  <div class="bottom-nav-row">
-    <a href="/">{{ home() }}Suites</a>
-    <a href="/tools/all/">{{ grid() }}All Tools</a>
-    <a href="/tools/">{{ bolt() }}Browse</a>
-    <a href="/pages/privacy/">{{ shield() }}Privacy</a>
+<nav class="bottom-nav" aria-label="Mobile navigation">
+  <div class="bottom-nav-inner">
+    <a href="/" aria-label="Home"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Home</a>
+    <a href="/tools/all/" aria-label="All Tools"><span class="icon"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>Tools</a>
+    <a href="/search/" aria-label="Search"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>Search</a>
+    <a href="/pages/privacy/" aria-label="Privacy"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Privacy</a>
   </div>
 </nav>
