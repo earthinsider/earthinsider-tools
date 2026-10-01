@@ -1,19 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 {% include "partials/head-meta.njk" %}
 {% include "partials/global-scripts.njk" %}
+<!-- Critical: theme is already applied via data-theme="dark" on html tag,
+     so no FOUC even before JS loads. JS will override with saved/OS preference. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<!-- Non-render-blocking font load via preload + onload trick -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"></noscript>
 <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
 {% include "partials/header.njk" %}
 <main>{{ content | safe }}</main>
 {% include "partials/footer.njk" %}
-<script src="/assets/site.js"></script>
+<script src="/assets/site.js" defer></script>
 </body>
 </html>
