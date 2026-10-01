@@ -3,17 +3,36 @@ layout: layouts/base.njk
 permalink: /404.html
 title: Page Not Found
 description: This page doesn't exist — search for what you were looking for.
-section: tools
 noindex: true
 ---
-<section class="hero">
-    <div class="container">
-        <h1>404 — Page Not Found</h1>
-        <p>That page doesn't exist. Try searching instead:</p>
-        <form action="/search/" method="GET" style="max-width:420px;margin:20px auto 0;display:flex;gap:8px;">
-            <input name="q" type="text" placeholder="Search tools & pages…" class="input-text" style="min-height:auto;padding:10px 14px;">
-            <button class="encode-btn" type="submit" style="width:auto;padding:10px 20px;">Search</button>
-        </form>
-        <p style="margin-top:20px;"><a href="/tools/">Or browse all tools →</a></p>
-    </div>
+<section class="hero-404">
+  <div class="big-404">
+    <span>4</span>
+    <div class="b404-icon"><span class="icon-xl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="40" height="40"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span></div>
+    <span>4</span>
+  </div>
+  <h1>Lost in Cyberspace?</h1>
+  <p>This page doesn't exist (yet). The page may have moved, been renamed, or is still being built.</p>
+  <form class="srch-box" action="/search/" method="GET">
+    <span class="icon icon-sm" style="color:var(--ol)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+    <input type="text" name="q" placeholder="Find a tool...">
+    <button type="submit">Search</button>
+  </form>
+  <div class="act-row">
+    <a class="act-btn primary-btn" href="/tools/all/">🗂️ Explore All Tools</a>
+    <a class="act-btn" href="/">🏠 Home</a>
+    <a class="act-btn" href="javascript:history.back()">← Go Back</a>
+  </div>
+</section>
+
+<section class="section">
+  <h2>Popular Tools</h2>
+  <div class="popular-grid">
+    {% for t in collections.toolsList %}
+    <a class="popular-card" href="{{ t.url }}">
+      <h3>{{ t | iconFor }} {{ t.title }}</h3>
+      <p>{{ t.desc }}</p>
+    </a>
+    {% endfor %}
+  </div>
 </section>
