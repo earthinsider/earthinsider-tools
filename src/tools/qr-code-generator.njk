@@ -46,7 +46,7 @@ advertisementsInnerCodes: []
 <h3>When to use QR codes</h3>
 <p>QR codes close the gap between physical and digital: a printout, a poster, a business card, a product label — any of these can become a tap-to-open link that cameras handle natively on every modern smartphone.</p>
 <p>They're also useful for sharing WiFi credentials, contact cards (vCards), calendar events, and plain text snippets without needing the receiver to type anything out.</p>{% endset %}
-      {{ seoBody | spreadInnerAds(innerAds) }}
+      {{ seoBody | safe | spreadInnerAds(innerAds) | safe }}
     </div>
   </section>
 </div>
