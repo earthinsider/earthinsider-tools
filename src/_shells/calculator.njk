@@ -12,77 +12,29 @@ schema:
   operatingSystem: "Any (runs in browser)"
 advertisementsInnerCodes: []
 ---
-{#
-  SHELL: calculator
-  AI must fill:
-    - ai_fields_json: JSON array like
-      [{"id":"principal","label":"Loan Amount","type":"number"},
-       {"id":"rate","label":"Interest Rate (%)","type":"number"}]
-    - ai_js_code: function calculate(inputs) { ... ; return resultString; }
-      (inputs is an object keyed by each field's "id")
-#}
 {% include "partials/breadcrumbs.njk" %}
-<section class="hero"><div class="container"><h1>{{ ai_title }}</h1><p class="hero-subtitle">{{ ai_description }}</p></div></section>
-
-<div class="container stack">
-    <section class="tool-widget">
-        <div class="tool-card">
-            <div id="fieldsContainer"></div>
-            <div class="button-group">
-                <button class="encode-btn" id="calcBtn">Calculate</button>
-            </div>
-            <div id="previewContainer"></div>
-        </div>
-        <button class="share-btn" id="shareBtn" type="button">🔗 Share this tool</button>
-    </section>
-
-    <section class="seo-content">
-        <div class="info-section">
-            <div class="container">
-                <h2>{{ ai_seo_heading }}</h2>
-                <div class="info-content">
-                    {{ ai_seo_content_html | safe | spreadInnerAds(advertisementsInnerCodes.length and advertisementsInnerCodes or site.defaultAdvertisementsInnerCodes) }}
-                </div>
-            </div>
-        </div>
-    </section>
+<section class="hero"><h1>{{ ai_title }}</h1><p class="hero-subtitle">{{ ai_description }}</p></section>
+<div style="display:flex;flex-direction:column">
+  <section class="tool-widget" style="padding:0 16px 16px">
+    <div class="workstation">
+      <div id="fieldsContainer"></div>
+      <div class="action-col"><button class="btn-primary" id="calcBtn" type="button">Calculate</button></div>
+      <div class="panel" style="margin-top:12px"><div class="panel-head"><span class="panel-title">Result</span><button class="panel-btn" id="copyBtn" type="button">Copy</button></div><div class="output-text" id="outputText">Enter values above</div></div>
+    </div>
+    <button class="share-btn" type="button">🔗 Share this tool</button>
+  </section>
+  <section class="seo-content"><div class="info-section"><h2>{{ ai_seo_heading }}</h2>{% set _ads = advertisementsInnerCodes if advertisementsInnerCodes.length else site.defaultAdvertisementsInnerCodes %}{{ ai_seo_content_html | safe | spreadInnerAds(_ads) | safe }}</div></section>
 </div>
-
 {% include "partials/related-tools.njk" %}
-
 <script id="tool-logic">
-const fields = {{ ai_fields_json | safe }};
-
-/* ==== AI-GENERATED LOGIC — only this function's body is AI content ==== */
+var fields = {{ ai_fields_json | safe }};
 function calculate(inputs) {
 {{ ai_js_code }}
 }
-/* ==== END AI-GENERATED LOGIC ==== */
-
-const fieldsContainer = document.getElementById('fieldsContainer');
-fieldsContainer.innerHTML = fields.map(f => `
-  <div style="margin-bottom:14px;">
-    <label style="display:block;font-size:.85rem;margin-bottom:6px;color:var(--text-light);">${f.label}</label>
-    <input class="input-text" style="min-height:auto;padding:10px 14px;" id="f_${f.id}" type="${f.type || 'text'}">
-  </div>`).join('');
-
-const previewContainer = document.getElementById('previewContainer');
-function runCalc(){
-  const inputs = {};
-  fields.forEach(f => { inputs[f.id] = document.getElementById('f_' + f.id).value; });
-  let out;
-  try { out = calculate(inputs); } catch(e){ out = 'Check your inputs.'; }
-  previewContainer.innerHTML = `<div class="preview-item"><div class="preview-text">${String(out).replace(/&/g,'&amp;').replace(/</g,'&lt;')}</div><button class="copy-btn" id="copyBtn">Copy</button></div>`;
-  const copyBtn = document.getElementById('copyBtn');
-  if(copyBtn) copyBtn.addEventListener('click', () => window.EI_copyText(String(out), copyBtn));
-}
-document.getElementById('calcBtn').addEventListener('click', runCalc);
-document.querySelector('.tool-widget').addEventListener('keydown', (e) => {
-  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); runCalc(); }
-});
-document.getElementById('shareBtn').addEventListener('click', function(){
-  const url = window.location.href;
-  if (navigator.share) { navigator.share({ title: document.title, url }).catch(()=>{}); }
-  else { window.EI_copyText(url, this); }
-});
+var container=document.getElementById('fieldsContainer'),output=document.getElementById('outputText');
+container.innerHTML=fields.map(function(f){return '<div style="margin-bottom:12px"><label style="display:block;font-size:.82rem;margin-bottom:4px;color:var(--on-surface-variant)">'+f.label+'</label><input class="tool-input" style="min-height:auto;padding:10px 12px" id="f_'+f.id+'" type="'+(f.type||'text')+'"></div>';}).join('');
+function run(){var inp={};fields.forEach(function(f){inp[f.id]=document.getElementById('f_'+f.id).value;});var out;try{out=calculate(inp);}catch(e){out='Check your inputs.';}output.textContent=String(out);}
+document.getElementById('calcBtn').addEventListener('click',run);
+document.getElementById('copyBtn').addEventListener('click',function(){window.EI_copyText&&window.EI_copyText(output.textContent,this);});
+document.querySelector('.share-btn').addEventListener('click',function(){window.EI_copyText&&window.EI_copyText(window.location.href,this);});
 </script>

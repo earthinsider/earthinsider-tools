@@ -12,75 +12,32 @@ schema:
   operatingSystem: "Any (runs in browser)"
 advertisementsInnerCodes: []
 ---
-{#
-  SHELL: text-io
-  JS CONTRACT the AI must fill in (see <script id="tool-logic"> below):
-    function processInput(text) { ... ; return outputString; }
-  Nothing else about this file should be touched by the generator —
-  only the {{ ai_* }} tokens and the processInput body.
-#}
 {% include "partials/breadcrumbs.njk" %}
-<section class="hero"><div class="container"><h1>{{ ai_title }}</h1><p class="hero-subtitle">{{ ai_description }}</p></div></section>
-
-<div class="container stack">
-    <section class="tool-widget">
-        <div class="app-container">
-            <section class="input-section">
-                <h2 class="section-title">Input</h2>
-                <textarea class="input-text" id="toolInput" placeholder="Type or paste text here..."></textarea>
-                <div class="button-group">
-                    <button class="encode-btn" id="runBtn">{{ ai_action_label | default("Run") }}</button>
-                    <button class="clear-btn" id="clearBtn">Clear</button>
-                </div>
-            </section>
-            <section class="preview-section">
-                <h2 class="section-title">Output</h2>
-                <div id="previewContainer"></div>
-            </section>
-        </div>
-        <button class="share-btn" id="shareBtn" type="button">🔗 Share this tool</button>
-    </section>
-
-    <section class="seo-content">
-        <div class="info-section">
-            <div class="container">
-                <h2>{{ ai_seo_heading }}</h2>
-                <div class="info-content">
-                    {{ ai_seo_content_html | safe | spreadInnerAds(advertisementsInnerCodes.length and advertisementsInnerCodes or site.defaultAdvertisementsInnerCodes) }}
-                </div>
-            </div>
-        </div>
-    </section>
+<section class="hero"><h1>{{ ai_title }}</h1><p class="hero-subtitle">{{ ai_description }}</p></section>
+<div style="display:flex;flex-direction:column">
+  <section class="tool-widget" style="padding:0 16px 16px">
+    <div class="workstation">
+      <div class="panels">
+        <div class="panel"><div class="panel-head"><span class="panel-title">Input</span><span class="counter-pill" id="inputCounter">0 chars</span></div><textarea class="tool-input" id="toolInput" placeholder="Type or paste text here..."></textarea></div>
+        <div class="action-col"><button class="btn-primary" id="runBtn" type="button">{{ ai_action_label | default("Run") }}</button><button class="btn-secondary" id="clearBtn" type="button">Clear</button></div>
+        <div class="panel"><div class="panel-head"><span class="panel-title">Output</span><button class="panel-btn" id="copyBtn" type="button">Copy</button></div><div class="output-text" id="outputText">Output will appear here</div></div>
+      </div>
+    </div>
+    <button class="share-btn" type="button">🔗 Share this tool</button>
+  </section>
+  <section class="seo-content"><div class="info-section"><h2>{{ ai_seo_heading }}</h2><div id="seoBody">{% set _ads = advertisementsInnerCodes if advertisementsInnerCodes.length else site.defaultAdvertisementsInnerCodes %}{{ ai_seo_content_html | safe | spreadInnerAds(_ads) | safe }}</div></div></section>
 </div>
-
 {% include "partials/related-tools.njk" %}
-
 <script id="tool-logic">
-/* ==== AI-GENERATED LOGIC — only this function's body is AI content ==== */
 function processInput(text) {
 {{ ai_js_code }}
 }
-/* ==== END AI-GENERATED LOGIC ==== */
-
-const toolInput = document.getElementById('toolInput');
-const previewContainer = document.getElementById('previewContainer');
-function renderOutput(text){
-  let out;
-  try { out = processInput(text); } catch(e){ out = ''; }
-  previewContainer.innerHTML = (out && String(out).trim())
-    ? `<div class="preview-item"><div class="preview-text">${String(out).replace(/&/g,'&amp;').replace(/</g,'&lt;')}</div><button class="copy-btn" id="copyBtn">Copy</button></div>`
-    : `<div style="text-align:center;padding:20px;color:var(--text-light)">Output will appear here</div>`;
-  const copyBtn = document.getElementById('copyBtn');
-  if(copyBtn) copyBtn.addEventListener('click', () => window.EI_copyText(String(out), copyBtn));
-}
-document.getElementById('runBtn').addEventListener('click', () => renderOutput(toolInput.value));
-document.getElementById('clearBtn').addEventListener('click', () => { toolInput.value=''; renderOutput(''); });
-document.querySelector('.tool-widget').addEventListener('keydown', (e) => {
-  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); renderOutput(toolInput.value); }
-});
-document.getElementById('shareBtn').addEventListener('click', function(){
-  const url = window.location.href;
-  if (navigator.share) { navigator.share({ title: document.title, url }).catch(()=>{}); }
-  else { window.EI_copyText(url, this); }
-});
+var input=document.getElementById('toolInput'),output=document.getElementById('outputText'),counter=document.getElementById('inputCounter');
+function run(){var t=input.value,out;try{out=processInput(t);}catch(e){out='';}output.textContent=out&&String(out).trim()?out:'Output will appear here';}
+document.getElementById('runBtn').addEventListener('click',run);
+document.getElementById('clearBtn').addEventListener('click',function(){input.value='';counter.textContent='0 chars';output.textContent='Output will appear here';});
+document.getElementById('copyBtn').addEventListener('click',function(){window.EI_copyText&&window.EI_copyText(output.textContent,this);});
+input.addEventListener('input',function(){counter.textContent=input.value.length+' chars';run();});
+document.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();run();}});
+document.querySelector('.share-btn').addEventListener('click',function(){window.EI_copyText&&window.EI_copyText(window.location.href,this);});
 </script>
