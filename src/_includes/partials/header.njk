@@ -1,9 +1,9 @@
-{% from "partials/icons.njk" import globe, search, moon, sun, menu %}
+{% from "partials/icons.njk" import globe %}
 <header class="site-header">
   <div class="header-row">
     <a href="/" class="logo">
       <div class="logo-mark">
-        {% if site.logoUrl %}<img class="logo-img" src="{{ site.logoUrl }}" alt="{{ site.siteName }}" width="32" height="32" loading="eager" fetchpriority="low">
+        {% if site.logoUrl %}<img class="logo-img" src="{{ site.logoUrl }}" alt="{{ site.siteName }}" width="32" height="32" loading="eager">
         {% else %}{{ globe() }}{% endif %}
       </div>
       <span class="logo-text">EarthInsider <span class="logo-tag">Tools</span></span>
@@ -15,9 +15,9 @@
     </nav>
 
     <div class="desktop-search-wrap">
-      <span class="srch-icon icon-sm">{{ search() | replace('class="icon"','') | safe }}</span>
+      <span class="srch-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
       <input id="desktopSearch" type="search" placeholder="Search tools… ( / )" autocomplete="off" aria-label="Search tools">
-      <div id="desktopDrop" class="search-dropdown" role="listbox"></div>
+      <div id="desktopDrop" class="search-dropdown"></div>
     </div>
 
     <div class="header-right">
@@ -31,11 +31,11 @@
     </div>
   </div>
 
-  <div class="mobile-menu" id="mobileMenuPanel" role="dialog" aria-label="Navigation menu">
+  <div class="mobile-menu" id="mobileMenuPanel">
     <div class="mobile-search-row">
-      <span class="icon icon-sm" style="color:var(--ol)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-      <input id="mobileSearch" type="search" placeholder="Search tools & pages…" autocomplete="off" aria-label="Search">
-      <div id="mobileDrop" class="search-dropdown" role="listbox" style="top:calc(100% + 6px);left:0;right:0"></div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ol);flex-shrink:0"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="mobileSearch" type="search" placeholder="Search tools & pages…" autocomplete="off">
+      <div id="mobileDrop" class="search-dropdown" style="top:calc(100% + 4px);left:0;right:0"></div>
     </div>
     <nav>
       <a href="/tools/">Tools</a>
@@ -43,10 +43,3 @@
     </nav>
   </div>
 </header>
-
-{% if site.desktopAdSlot or site.mobileAdSlot %}
-<div>
-  <div class="ad-unit desktop">{{ site.desktopAdSlot | safe }}</div>
-  <div class="ad-unit mobile">{{ site.mobileAdSlot | safe }}</div>
-</div>
-{% endif %}
